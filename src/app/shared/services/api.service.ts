@@ -1,34 +1,24 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Rx';
 import { environment } from '../../../environments/environment';
-import { Headers, Http, Response } from '@angular/http';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/catch';
+import { HttpHeaders, HttpClient, HttpParams } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 @Injectable()
 export class ApiService {
-	baseUrl: String
+  constructor(
+    private http: HttpClient,
+  ) {}
 
-	constructor() {
-		this.baseUrl = `${environment.api_url}`;
-		console.log('environment is: ' + this.baseUrl) 
-	}
+  post(path: string, body: Object = {}): Observable<any> {
+    return this.http.post(
+      `${environment.api_url}${path}`,
+      JSON.stringify(body)
+    ).pipe(catchError(this.formatErrors));
+  }
 
-	post(path: string, body: Object = {}): Observable<any> {
-		return this.http
-		.post(`${this.baseUrl}${path}`, JSON.stringify(body), { headers: this.headers()})
-		.catch(this.formatErrors)
-		.map(response => response.json());
-	}
-
-	headers(): Headers {
-		const headers = {
-			'Accept': 'application/json',
-      	  	'Content-Type': 'application/json'
-	    };
-	}
-	
-	private formatErrors(error: any) {
-    	return Observable.throw(error.json());
-    }
+  private formatErrors(error: any) {
+    return  throwError(error.error);
+  }
 }
