@@ -3,6 +3,9 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 
 import { ApiService } from './shared/services/api.service';
+import { AuthService } from './shared/services/auth/auth.service';
+import { CapacityOffloadService } from './shared/services/capacity-offload.service';
+import { ConcurrentViewersService } from './shared/services/concurrent-viewers.service';
 
 import { AppComponent } from './app.component';
 
@@ -15,7 +18,10 @@ import { AppComponent } from './app.component';
     HttpClientModule
   ],
   providers: [
-	ApiService
+	  ApiService,
+    CapacityOffloadService,
+    ConcurrentViewersService,
+    AuthService
   ],
   bootstrap: [AppComponent]
 })
