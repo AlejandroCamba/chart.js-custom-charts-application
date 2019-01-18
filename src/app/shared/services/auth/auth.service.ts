@@ -9,43 +9,29 @@ import { ApiService } from '../api.service';
 
 @Injectable()
 export class AuthService {
-	private cacheUser :User;
 
   	constructor(private apiService: ApiService) { }
 
-  	login(userCredentials: UserCredentials): Observable<User> {
+  	login(userCredentials: UserCredentials): Observable<string> {
       	return this.apiService
-        	.post('/auth', 
+        	.post('auth', 
         		{
         			"identifiant": userCredentials.getIdentifiant(),
         			"password": userCredentials.getPassword()
         		}
         		).map(response => {
-            		this.cacheUser = new User(response.session_token);
-            		return this.cacheUser;
+                localStorage.setItem("session_token", response.session_token);
+            		return localStorage.getItem("session_token");
         		})
-  	}    	
-
-  	logout(): Observable<User> {
-      	return this.apiService
-        	.post('/auth', { "session_token": localStorage.getItem["session_token"] }).map(response => {
-            	this.cacheUser = new User(response.session_token);
-            	return this.cacheUser;
-        	})
-  	}  
-
-  	getCurrentUser(): Observable<User> {
-  		if (this.cacheUser) {
-  			return Observable.bind(this.cacheUser);
-  		} else {
-      		return this.apiService
-        	.post('/myinfo').map(response => {
-            	this.cacheUser = new User(response.session_token);
-            	localStorage.setItem('session_token', response.session_token);
-            	return this.cacheUser;
-        	})
-  		}
   	}
 
+    getToken(): string {
+      return localStorage.getItem("session_token");
+    }    
 
+    logout(): void {
+      this.apiService.post('logout', 
+        { "session_token": localStorage.getItem("session_token") } 
+       );
+    }
 }
