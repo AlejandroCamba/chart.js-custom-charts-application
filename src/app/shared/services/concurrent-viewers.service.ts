@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, ReplaySubject } from 'rxjs';
 
-import { ConcurrentViewers } from '../../graph-view/concurrent-viewers/model/concurrent-viewers.model';
+import { ConcurrentViewers } from '../../composite-graph-view/concurrent-viewers/model/concurrent-viewers.model';
 
 import 'rxjs/add/operator/map';
 import { ApiService } from './api.service';

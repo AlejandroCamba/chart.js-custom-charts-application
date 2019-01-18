@@ -1,19 +1,17 @@
-import { Component, OnInit } from '@angular/core';
-
+import { Component, OnInit, Input } from '@angular/core';
+import { AuthService } from './shared/services/auth/auth.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit{
-  title = 'frontend-application-test';
+export class AppComponent {
 
-  constructor(){
+  	constructor(private authService: AuthService){}
 
-  }
-
-  ngOnInit() {
-
-  }
+  	isUserLoggedIn(): boolean {
+  		return this.authService.getToken() == null ? false : true;
+ 	}
 }
