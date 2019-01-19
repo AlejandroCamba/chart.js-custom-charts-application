@@ -29,9 +29,12 @@ export class AuthService {
       return localStorage.getItem("session_token");
     }    
 
-    logout(): void {
-      this.apiService.post('logout', 
+    logout(): Observable<boolean> {
+      return this.apiService.post('logout', 
         { "session_token": localStorage.getItem("session_token") } 
-       );
+       ).map(res => {
+         localStorage.clear();
+         return true;
+       });
     }
 }

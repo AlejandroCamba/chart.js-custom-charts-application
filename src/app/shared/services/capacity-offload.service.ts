@@ -14,9 +14,27 @@ export class CapacityOffloadService {
 
   getCapacityOffload(): Observable<CapacityOffload> {
       return this.apiService
-        .post('/bandwidth', { "session_token": localStorage.getItem["session_token"] }).map(response => {
-            this.capacityOffload = new CapacityOffload();
+        .post('bandwidth', { 
+        	"session_token": localStorage.getItem("session_token"),
+        	"from":1509548400000,
+        	"to":1510844400000 }).map(response => {
+        		console.log(response);
+	            this.capacityOffload = new CapacityOffload(
+	            		response['cdn'],
+	            		response['p2p']
+	            	);
             return this.capacityOffload;
         })
   }
+
+  getMaximumValues(): Observable<any> {
+    return this.apiService
+        .post('bandwidth', { 
+        	"session_token": localStorage.getItem("session_token"),
+        	"from":1509548400000,
+        	"to":1510844400000,
+        	"aggregate": "max" }).map(response => {
+        		return response
+        })
+  	}  
 }
