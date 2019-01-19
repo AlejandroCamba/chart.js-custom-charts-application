@@ -70,23 +70,23 @@ export class CapacityOffloadComponent {
 				      mode: "horizontal",
 				      scaleID: "y-axis-0",
 				      value: this.maxP2p,
-				      borderDash: [3],
+				      borderDash: [4],
 				      borderWidth: 2,
-				      borderColor: 'rgba(255,255,255,0.2)',
+				      borderColor: 'rgba(69,135,65,0.9)',
 				      label: {
-				        backgroundColor: "white",
-				        content: 30,
+				        backgroundColor: "rgba(0,0,0,0)",
+				        content: "Maximum throughput: " + this.maxP2p,
 				        enabled: true,
-				        position: "left",
+				        position: "right",
 				        fontFamily: 'Roboto',
-				        fontColor: '#273261',
+				        fontColor: 'black',
 				        cornerRadius: 12,
 				        xPadding: 12 ,
 				        yPadding: 6 ,
 				        fontSize: 10 ,
 				        fontStyle: 'bold',
-				        yAdjust: 0,
-				        xAdjust: 85,
+				        yAdjust: -10,
+				        xAdjust: 0,
 				      }
 				    },{
 				      drawTime: "beforeDatasetsDraw",
@@ -95,29 +95,26 @@ export class CapacityOffloadComponent {
 				      mode: "horizontal",
 				      scaleID: "y-axis-0",
 				      value: this.maxCdn,
-				      borderDash: [3],
+				      borderDash: [4],
 				      borderWidth: 2,
-				      borderColor: 'rgba(255,255,255,0.2)',
+				      borderColor: 'rgba(178,18,98,0.9)',
 				      label: {
-				        backgroundColor: "white",
-				        content: 50,
+				        backgroundColor: "rgba(0,0,0,0)",
+				        content: "Maximum CDN contrinution: " + this.maxCdn,
 				        enabled: true,
 				        position: "left",
 				        fontFamily: 'Roboto',
-				        fontColor: '#273261',
+				        fontColor: 'black',
 				        cornerRadius: 12,
 				        xPadding: 12 ,
 				        yPadding: 6 ,
 				        fontSize: 10 ,
 				        fontStyle: 'bold',
-				        yAdjust: 0,
-				        xAdjust: 85,
+				        yAdjust: -10,
+				        xAdjust: 0,
 				      }
 				    }]
 				  },
-				title: {
-					text: 'Chart.js Line Chart'
-				},
 				tooltips: {
 					mode: 'index',
 					intersect: false,
@@ -129,16 +126,20 @@ export class CapacityOffloadComponent {
 				scales: {
 					xAxes: [{
 						display: true,
+						gridLines: {
+	                		color: "rgba(0, 0, 0, 0)",
+						},
 						scaleLabel: {
-							display: true,
-							labelString: 'Month'
+							display: false,
 						}
 					}],
 					yAxes: [{
 						display: true,
+						gridLines: {
+	                		color: "rgba(0, 0, 0, 0)",
+						},
 						scaleLabel: {
-							display: true,
-							labelString: 'Value'
+							display: false,
 						}
 					}]
 				}
