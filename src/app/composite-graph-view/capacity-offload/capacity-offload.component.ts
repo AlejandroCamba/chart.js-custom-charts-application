@@ -28,11 +28,10 @@ export class CapacityOffloadComponent {
 
   	private setCanvasDimensions() {
     	this.canvasElement = <HTMLCanvasElement> document.getElementById('bandwith-id');
+    	this.canvasElement.height = 65;
   	}
 	
 	ngOnInit() {
-		console.log("labelsss: " + this.cdnLabels);
-		console.log("dataaaa: " + this.cdnData[0].data);
 		this.setCanvasDimensions();  
 		this.initializeGraph();		
 	}

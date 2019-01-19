@@ -14,9 +14,12 @@ export class ConcurrentViewersService {
 
   getCapacityOffload(): Observable<ConcurrentViewers> {
       return this.apiService
-        .post('/audience', { "session_token": localStorage.getItem["session_token"] }).map(response => {
-            this.concurrentViewers = new ConcurrentViewers();
-            return this.concurrentViewers;
+        .post('audience', {
+        	"session_token": localStorage.getItem("session_token"),
+        	"from":1509548400000,
+        	"to":1510844400000 }).map(response => {
+        		this.concurrentViewers = new ConcurrentViewers(response["audience"]);
+        		return this.concurrentViewers;
         })
   }
 }
