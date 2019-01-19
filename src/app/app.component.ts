@@ -7,11 +7,19 @@ import { Observable } from 'rxjs';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit{
 
   	constructor(private authService: AuthService){}
 
   	isUserLoggedIn(): boolean {
   		return this.authService.getToken() == null ? false : true;
+ 	}
+
+ 	ngOnInit() {
+ 		if (this.authService.getToken()!) {
+	 		this.authService.logout().subscribe(res => {
+	 			console.log("page reloaded, logging out...");
+	 		});
+ 		}
  	}
 }
