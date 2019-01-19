@@ -59,8 +59,11 @@ export class CapacityOffloadComponent {
 			options: {
 				responsive: true,
 				maintainAspectRatio: true,
-				leyend: {
-					display: false
+				legend: {
+				    display: false,
+				    labels: {
+				      	boxWidth: 0
+				    }
 				},
 				annotation: {
 				    annotations: [{
@@ -116,8 +119,7 @@ export class CapacityOffloadComponent {
 				    }]
 				  },
 				tooltips: {
-					mode: 'index',
-					intersect: false,
+					enabled: false
 				},
 				hover: {
 					mode: 'nearest',
