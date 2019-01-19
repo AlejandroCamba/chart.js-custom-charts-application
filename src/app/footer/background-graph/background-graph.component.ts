@@ -2,23 +2,23 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Chart }  from 'chart.js';
 
 @Component({
-  selector: 'concurrent-viewers',
-  templateUrl: './concurrent-viewers.component.html',
-  styleUrls: ['./concurrent-viewers.component.scss']
+  selector: 'background-graph',
+  templateUrl: './background-graph.component.html',
+  styleUrls: ['./background-graph.component.scss']
 })
 
-export class ConcurrentViewersComponent {
-  	@Input() viewersData: Array<any>;
-  	@Input() viewersLabels: Array<any>;
+export class BackgroundGraphComponent {
+  	@Input() backgroundData: Array<any>;
+  	@Input() backgroundLabels: Array<any>;
 
-  	public viewersChart: Chart;
+  	public backgroundChart: Chart;
   	private canvasElement: HTMLCanvasElement;
 
   	constructor(){}
 
   	private setCanvasDimensions() {
-    	this.canvasElement = <HTMLCanvasElement> document.getElementById('concurrent-id');
-    	this.canvasElement.height = 45;
+    	this.canvasElement = <HTMLCanvasElement> document.getElementById('background-graph-id');
+    	this.canvasElement.height = 20;
   	}
 	
 	ngOnInit() {
@@ -30,11 +30,11 @@ export class ConcurrentViewersComponent {
     let config = {
 			type: 'line',
 			data: {
-				labels: this.viewersLabels,
+				labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
 				datasets: [{
 					lineTension: 0,
 					label: '',
-					data: this.viewersData[0].data,
+					data: [1,2,3,4,5,6,7],
 					fill: true,
 					pointRadius: 0
 				}]
@@ -66,7 +66,7 @@ export class ConcurrentViewersComponent {
 						}
 					}],
 					yAxes: [{
-						display: true,
+						display: false,
 						gridLines: {
 	                		color: "rgba(0, 0, 0, 0)",
 						},
@@ -78,6 +78,6 @@ export class ConcurrentViewersComponent {
 			}
 		};
 
-    this.viewersChart = new Chart(this.canvasElement, config);
+    this.backgroundChart = new Chart(this.canvasElement, config);
   }
 }

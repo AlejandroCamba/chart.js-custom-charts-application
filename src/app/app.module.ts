@@ -14,6 +14,8 @@ import { CompositeGraphViewComponent } from './composite-graph-view/composite-gr
 import { CapacityOffloadComponent } from './composite-graph-view/capacity-offload/capacity-offload.component';
 import { ConcurrentViewersComponent } from './composite-graph-view/concurrent-viewers/concurrent-viewers.component';
 import { LoginComponent } from './login/login.component';
+import { FooterComponent } from './footer/footer.component';
+import { BackgroundGraphComponent } from './footer/background-graph/background-graph.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +23,9 @@ import { LoginComponent } from './login/login.component';
     CompositeGraphViewComponent,
     CapacityOffloadComponent,
     ConcurrentViewersComponent,
-    LoginComponent
+    LoginComponent,
+    FooterComponent,
+    BackgroundGraphComponent
   ],
   imports: [
     BrowserModule,
