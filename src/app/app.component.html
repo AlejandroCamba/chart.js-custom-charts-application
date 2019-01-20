@@ -1,3 +1,7 @@
 <login *ngIf="isUserLoggedIn() == false"></login>
-<composite-graph-view *ngIf="isUserLoggedIn() == true"></composite-graph-view>
-<footer></footer>
+<div *ngIf="isUserLoggedIn() == true">
+	<div class="container fill">
+		<composite-graph-view></composite-graph-view>							
+		<footer></footer>				
+	</div>	
+</div>

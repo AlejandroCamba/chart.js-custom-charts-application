@@ -35,7 +35,8 @@ export class ConcurrentViewersComponent {
 					lineTension: 0,
 					label: '',
 					data: this.viewersData[0].data,
-					fill: true,
+					fill: false,
+					borderColor: '#E65F00',
 					pointRadius: 0
 				}]
 			},
@@ -72,6 +73,12 @@ export class ConcurrentViewersComponent {
 						},
 						scaleLabel: {
 							display: false,
+						},
+						ticks: {
+							maxTicksLimit: 3,			
+							callback: function(value, index) {
+			                	if (value !== 0) return value;
+			               	}
 						}
 					}]
 				}

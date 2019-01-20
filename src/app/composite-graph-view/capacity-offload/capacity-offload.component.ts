@@ -37,7 +37,7 @@ export class CapacityOffloadComponent {
 
   	private setCanvasDimensions() {
     	this.canvasElement = <HTMLCanvasElement> document.getElementById('bandwith-id');
-    	this.canvasElement.height = 45;
+    	this.canvasElement.height = 57;
   	}
 	
 	ngOnInit() {
@@ -65,16 +65,28 @@ export class CapacityOffloadComponent {
 					label: '',
 					data: this.bytesUtils.toGb(this.cdnData[0].data),
 					fill: true,
+					backgroundColor: '#C54C84',
+					borderColor: '#B2125C',
 					pointRadius: 0
 				}, {
 					label: '',
 					fill: true,
+					backgroundColor: '#6AB8DE',
+					borderColor: '#3AA0D3',
 					pointRadius: 0,
 					lineTension: 0,
 					data: this.bytesUtils.toGb(this.p2pData[0].data),
 				}]
 			},
-			options: {
+			options: {         
+				layout: {
+		            padding: {
+		                left: 0,
+		                right: 0,
+		                top: 15,
+		                bottom: 0
+		            }
+        		},
 				responsive: true,
 				maintainAspectRatio: true,
 				legend: {
@@ -85,7 +97,7 @@ export class CapacityOffloadComponent {
 				},
 				annotation: {
 				    annotations: [{
-				      drawTime: "beforeDatasetsDraw",
+				      drawTime: "afterDraw",
 				      id: "hline",
 				      type: "line",
 				      mode: "horizontal",
@@ -104,13 +116,13 @@ export class CapacityOffloadComponent {
 				        cornerRadius: 12,
 				        xPadding: 12 ,
 				        yPadding: 6 ,
-				        fontSize: 10 ,
-				        fontStyle: 'bold',
-				        yAdjust: -10,
+				        fontSize: 12 ,
+				        fontStyle: 'normal',
+				        yAdjust: -5,
 				        xAdjust: 0,
 				      }
 				    },{
-				      drawTime: "beforeDatasetsDraw",
+				      drawTime: "afterDraw",
 				      id: "dline",
 				      type: "line",
 				      mode: "horizontal",
@@ -129,9 +141,9 @@ export class CapacityOffloadComponent {
 				        cornerRadius: 12,
 				        xPadding: 12 ,
 				        yPadding: 6 ,
-				        fontSize: 10 ,
-				        fontStyle: 'bold',
-				        yAdjust: -10,
+				        fontSize: 12,
+				        fontStyle: 'normal',
+				        yAdjust: -5,
 				        xAdjust: 0,
 				      }
 				    }]
@@ -167,7 +179,10 @@ export class CapacityOffloadComponent {
 							display: false,
 						},
 						ticks: {
-							maxTicksLimit: 4
+							maxTicksLimit: 3,
+							callback: function(value, index) {
+			                	if (value !== 0) return [value,'Gbps'];
+			               	}
 						}
 					}]
 				}
