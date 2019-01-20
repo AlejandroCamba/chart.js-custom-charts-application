@@ -57,9 +57,9 @@ export class CapacityOffloadComponent {
 			let date = new Date(value)
 			let monthName = [
 				"Jan", "Feb", "Mar",
-				"Apr", "May", "Jun", "Jul",
-				"Aug", "Sep", "Oct",
-				"Nov", "Dec"
+				"Apr", "May", "Jun", 
+				"Jul", "Aug", "Sep", 
+				"Oct", "Nov", "Dec"
 			]
 
 			return date.getDate() + ". " + monthName[date.getMonth()];
@@ -137,6 +137,8 @@ export class CapacityOffloadComponent {
 				    }]
 	}	
 
+	config.options.scales.xAxes[0].display = true;
+
 	config.options.scales.xAxes[0].ticks = {
 		maxTicksLimit: 15,
 		maxRotation: 0,
@@ -149,7 +151,7 @@ export class CapacityOffloadComponent {
 			if (value !== 0) return [value,'Gbps'];
 		}		
 	}
-
+	console.log(config)
     this.bandiwthChart = new Chart(this.canvasElement, config);
   }
 }
