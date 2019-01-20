@@ -10,7 +10,7 @@ import { ConcurrentViewers } from './concurrent-viewers/model/concurrent-viewers
   styleUrls: ['./composite-graph-view.component.scss']
 })
 
-export class CompositeGraphViewComponent implements OnInit, OnChanges{
+export class CompositeGraphViewComponent implements OnInit {
 	private capacityOffloadData: CapacityOffload;
 	private concurrentViewers: ConcurrentViewers;
 
@@ -42,7 +42,6 @@ export class CompositeGraphViewComponent implements OnInit, OnChanges{
   			
   			this.p2pLabels = Object.assign([], this.capacityOffloadData.getP2pLabels());
   			this.cdnLabels = Object.assign([], this.capacityOffloadData.getCdnLabels());
-  			
   		},error=> console.log("Error trying to get capacity offload data"));
 
   		this.capacityOffloadService.getMaximumValues().subscribe(res => {
@@ -60,9 +59,5 @@ export class CompositeGraphViewComponent implements OnInit, OnChanges{
 
     ngOnDestroy() {
         this.cdr.detach();
-    }
-
-    ngOnChanges(simpleChanges: SimpleChanges){
-      console.log("SSSSSSSSSS");
     }
 }

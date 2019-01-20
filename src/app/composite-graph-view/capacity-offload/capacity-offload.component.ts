@@ -52,6 +52,10 @@ export class CapacityOffloadComponent {
 	}
 
 	private initializeGraph() {
+	if (this.bandiwthChart) {
+		this.bandiwthChart.destroy();
+	}
+	console.log("capacity offload initializing...")
 	let config = JSON.parse(JSON.stringify(DEFAULT_CONFIG));
 
 	config.options.layout.padding.top = 15;
@@ -147,6 +151,7 @@ export class CapacityOffloadComponent {
 			if (value !== 0) return [value,'Gbps'];
 		}		
 	}
+	console.log(config.data);
     this.bandiwthChart = new Chart(this.canvasElement, config);
   }
 }

@@ -5,6 +5,7 @@ import { ConcurrentViewers } from '../composite-graph-view/concurrent-viewers/mo
 import { TimestampConversionService } from '../shared/utils/conversions/timestamp-conversion.service';
 import { CapacityOffloadService } from '../shared/services/capacity-offload.service';
 import { ConcurrentViewersService } from '../shared/services/concurrent-viewers.service';
+import { DatePickCacheService } from '../shared/services/date-pick-cache.service';
 
 @Component({
   selector: 'footer',
@@ -52,7 +53,8 @@ export class FooterComponent implements OnInit {
   	constructor(
   		private timestampConversion: TimestampConversionService,
   		private capacityOffloadService: CapacityOffloadService,
-  		private concurrentViewersService: ConcurrentViewersService ){}
+  		private concurrentViewersService: ConcurrentViewersService,
+  		private dateCache: DatePickCacheService ){}
 
  	ngOnInit() {
  		let i = 0;
@@ -79,6 +81,7 @@ export class FooterComponent implements OnInit {
 	}
 
 	setInitialDate(timestamp) {
+		this.dateCache.setFrom(timestamp);
   		this.capacityOffloadService.getCapacityOffload(timestamp, undefined).subscribe( res => {
   			this.capacityOffloadData = res;
   			
@@ -114,6 +117,7 @@ export class FooterComponent implements OnInit {
 	}
 
 	setFinalDate(timestamp) {
+		this.dateCache.setTo(timestamp)
   		this.capacityOffloadService.getCapacityOffload(undefined, timestamp).subscribe( res => {
   			this.capacityOffloadData = res;
   			
