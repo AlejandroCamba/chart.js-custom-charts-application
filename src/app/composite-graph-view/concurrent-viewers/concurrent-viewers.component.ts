@@ -1,5 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Chart }  from 'chart.js';
+import { DEFAULT_CONFIG } from '../../shared/const/graph/graph-default.configuration'
+import { COLORS } from '../../shared/const/global/global.constants'
 
 @Component({
   selector: 'concurrent-viewers',
@@ -27,9 +29,10 @@ export class ConcurrentViewersComponent {
 	}
 
 	private initializeGraph() {
-    let config = {
-			type: 'line',
-			data: {
+
+	let config = JSON.parse(JSON.stringify(DEFAULT_CONFIG));
+
+		config.data = {
 				labels: this.viewersLabels,
 				datasets: [{
 					lineTension: 0,
@@ -38,52 +41,15 @@ export class ConcurrentViewersComponent {
 					fill: false,
 					borderColor: '#E65F00',
 					pointRadius: 0
-				}]
-			},
-			options: {
-				responsive: true,
-				maintainAspectRatio: true,
-				legend: {
-				    display: false,
-				    labels: {
-				      	boxWidth: 0
-				    }
-				},
-				tooltips: {
-					enabled: false
-				},
-				hover: {
-					mode: 'nearest',
-					intersect: true
-				},
-				scales: {
-					xAxes: [{
-						display: false,
-						gridLines: {
-	                		color: "rgba(0, 0, 0, 0)",
-						},
-						scaleLabel: {
-							display: false,
-						}
-					}],
-					yAxes: [{
-						display: true,
-						gridLines: {
-	                		color: "rgba(0, 0, 0, 0)",
-						},
-						scaleLabel: {
-							display: false,
-						},
-						ticks: {
+				}]			
+		};
+
+		config.options.scales.yAxes[0].ticks = {
 							maxTicksLimit: 3,			
 							callback: function(value, index) {
 			                	if (value !== 0) return value;
-			               	}
-						}
-					}]
-				}
-			}
-		};
+			               	}			
+		 };
 
     this.viewersChart = new Chart(this.canvasElement, config);
   }
