@@ -5,8 +5,6 @@ export class ConcurrentViewers {
 	private viewers: Array<number> = [];
 
 	constructor(viewersTuples: Array<Array<number>>){
-		console.log("recibo:");
-		console.log(viewersTuples);
 		this.viewersTuples = viewersTuples;
 
 		this.mapDataIntoDisplayable();

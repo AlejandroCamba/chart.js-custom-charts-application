@@ -30,8 +30,6 @@ export class CapacityOffload {
 	private mapDataIntoDisplayable(): void {
 		this.setGraph(this.cdnTuples, this.cdnTimestamp, this.cdnData);
 		this.setGraph(this.p2pTuples, this.p2pTimestamp, this.p2pData);
-		console.log("after, cdn timestamp: " + this.cdnTimestamp);
-		console.log("after, p2p timestamp: " + this.p2pTimestamp);
 	}
 
 	public getP2pLabels(): Array<number> {

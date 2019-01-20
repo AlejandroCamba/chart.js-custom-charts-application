@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, SimpleChange } from '@angular/core';
 import { Chart }  from 'chart.js';
 import { DEFAULT_CONFIG } from '../../shared/const/graph/graph-default.configuration'
 import { COLORS } from '../../shared/const/global/global.constants'
@@ -27,6 +27,10 @@ export class ConcurrentViewersComponent {
 		this.setCanvasDimensions();  
 		this.initializeGraph();		
 	}
+    
+    ngOnChanges(changes: { [propName: string]: SimpleChange }) {
+    	this.initializeGraph();
+	}
 
 	private initializeGraph() {
 
@@ -37,7 +41,7 @@ export class ConcurrentViewersComponent {
 				datasets: [{
 					lineTension: 0,
 					label: '',
-					data: this.viewersData[0].data,
+					data: this.viewersData,
 					fill: false,
 					borderColor: '#E65F00',
 					pointRadius: 0
