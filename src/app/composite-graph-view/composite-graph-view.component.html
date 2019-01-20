@@ -1,0 +1,28 @@
+	<div class="row">
+		<div class="col-12">
+			<div class="big-graph">
+				<capacity-offload 
+					*ngIf="capacityOffloadData && maxCdn && maxP2p"
+					class="big-graph"
+					[p2pData]="[{ data : p2pData}]"
+					[p2pLabels]="p2pLabels"
+					[cdnData]="[{ data : cdnData}]"
+					[cdnLabels]="cdnLabels"
+					[maxCdn]="maxCdn"
+					[maxP2p]="maxP2p">
+				</capacity-offload>	
+			</div>			
+		</div>
+	</div>	
+	<div class="row">
+		<div class="col-12">
+			<div class="big-graph">
+				<concurrent-viewers 
+					*ngIf="viewersData && viewersLabels"
+					class="big-graph"
+					[viewersData]="[{ data : viewersData}]"
+					[viewersLabels]="viewersLabels">
+				</concurrent-viewers>	
+			</div>			
+		</div>
+	</div>
