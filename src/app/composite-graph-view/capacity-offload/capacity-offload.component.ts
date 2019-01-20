@@ -37,7 +37,7 @@ export class CapacityOffloadComponent {
 
   	private setCanvasDimensions() {
     	this.canvasElement = <HTMLCanvasElement> document.getElementById('bandwith-id');
-    	this.canvasElement.height = 65;
+    	this.canvasElement.height = 45;
   	}
 	
 	ngOnInit() {
@@ -151,6 +151,11 @@ export class CapacityOffloadComponent {
 						},
 						scaleLabel: {
 							display: false,
+						},
+						ticks: {
+							maxTicksLimit: 15,
+							maxRotation: 0,
+							minRotation: 0
 						}
 					}],
 					yAxes: [{
@@ -160,6 +165,9 @@ export class CapacityOffloadComponent {
 						},
 						scaleLabel: {
 							display: false,
+						},
+						ticks: {
+							maxTicksLimit: 4
 						}
 					}]
 				}

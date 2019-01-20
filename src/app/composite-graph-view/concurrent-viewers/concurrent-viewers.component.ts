@@ -18,7 +18,7 @@ export class ConcurrentViewersComponent {
 
   	private setCanvasDimensions() {
     	this.canvasElement = <HTMLCanvasElement> document.getElementById('concurrent-id');
-    	this.canvasElement.height = 65;
+    	this.canvasElement.height = 35;
   	}
 	
 	ngOnInit() {
