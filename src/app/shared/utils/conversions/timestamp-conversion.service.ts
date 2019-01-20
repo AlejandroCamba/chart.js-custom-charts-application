@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 export class TimestampConversionService {
 	constructor() {}
 
-  	toFormattedDate(timestamp: number): string {
+  	toShortDate(timestamp: number): string {
  		let monthName = [
 			"Jan", "Feb", "Mar",
 			"Apr", "May", "Jun", "Jul",
@@ -15,5 +15,18 @@ export class TimestampConversionService {
 		let date = new Date(timestamp)
 
 		return date.getDate() + ". " + monthName[date.getMonth()];  		
+  	}
+
+  	toFulltDate(timestamp: number): string {
+ 		let monthName = [
+			"January", "February", "March",
+			"April", "May", "June", "July",
+			"August", "September", "October",
+			"November", "December"
+		];
+
+		let date = new Date(timestamp)
+
+		return date.getDate() + " " + monthName[date.getMonth()] + " " +  date.getFullYear();  		
   	}
 }

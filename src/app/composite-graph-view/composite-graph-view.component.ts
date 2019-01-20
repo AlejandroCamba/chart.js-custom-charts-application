@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, OnChanges, SimpleChanges, Input } from '@angular/core';
 import { CapacityOffloadService } from '../shared/services/capacity-offload.service';
 import { ConcurrentViewersService } from '../shared/services/concurrent-viewers.service';
 import { CapacityOffload } from './capacity-offload/model/capacity-offload.model'
@@ -10,23 +10,23 @@ import { ConcurrentViewers } from './concurrent-viewers/model/concurrent-viewers
   styleUrls: ['./composite-graph-view.component.scss']
 })
 
-export class CompositeGraphViewComponent implements OnInit{
+export class CompositeGraphViewComponent implements OnInit {
 	private capacityOffloadData: CapacityOffload;
 	private concurrentViewers: ConcurrentViewers;
 
 	// capacity offload graph
-	private p2pData: Array<number>;
-	private cdnData: Array<number>;
+	@Input() private p2pData: Array<number>;
+	@Input() private cdnData: Array<number>;
 
-	private p2pLabels: Array<number>;
-	private cdnLabels: Array<number>;
+	@Input() private p2pLabels: Array<number>;
+	@Input() private cdnLabels: Array<number>;
 
-	private maxCdn: number;
-	private maxP2p: number;
+	@Input() private maxCdn: number;
+	@Input() private maxP2p: number;
 
 	//concurrent viewers graph
-	private viewersData: Array<number>;
-	private viewersLabels: Array<number>
+	@Input() private viewersData: Array<number>;
+	@Input() private viewersLabels: Array<number>
 
   	constructor(
   		private capacityOffloadService: CapacityOffloadService,
@@ -42,7 +42,6 @@ export class CompositeGraphViewComponent implements OnInit{
   			
   			this.p2pLabels = Object.assign([], this.capacityOffloadData.getP2pLabels());
   			this.cdnLabels = Object.assign([], this.capacityOffloadData.getCdnLabels());
-  			
   		},error=> console.log("Error trying to get capacity offload data"));
 
   		this.capacityOffloadService.getMaximumValues().subscribe(res => {
@@ -50,7 +49,7 @@ export class CompositeGraphViewComponent implements OnInit{
   			this.maxCdn = res['cdn'];
   		}, error => console.log("Error trying to get maximum cdn & p2p value"))
 
-  		this.concurrentViewersService.getCapacityOffload().subscribe(res => {
+  		this.concurrentViewersService.getConcurrentViewers().subscribe(res => {
   			this.concurrentViewers = res;
 
   			this.viewersData = Object.assign([], this.concurrentViewers.getViewers());
@@ -61,5 +60,4 @@ export class CompositeGraphViewComponent implements OnInit{
     ngOnDestroy() {
         this.cdr.detach();
     }
-
 }

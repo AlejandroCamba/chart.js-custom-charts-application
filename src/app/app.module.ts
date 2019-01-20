@@ -8,6 +8,7 @@ import { ApiService } from './shared/services/api.service';
 import { AuthService } from './shared/services/auth/auth.service';
 import { CapacityOffloadService } from './shared/services/capacity-offload.service';
 import { ConcurrentViewersService } from './shared/services/concurrent-viewers.service';
+import { DatePickCacheService } from './shared/services/date-pick-cache.service';
 
 import { AppComponent } from './app.component';
 import { CompositeGraphViewComponent } from './composite-graph-view/composite-graph-view.component';
@@ -37,7 +38,8 @@ import { BackgroundGraphComponent } from './footer/background-graph/background-g
 	  ApiService,
     CapacityOffloadService,
     ConcurrentViewersService,
-    AuthService
+    AuthService,
+    DatePickCacheService
   ],
   bootstrap: [AppComponent]
 })

@@ -1,4 +1,4 @@
-import { Component, Input, AfterViewInit } from '@angular/core';
+import { Component, Input, AfterViewInit, SimpleChange } from '@angular/core';
 import { Chart }  from 'chart.js';
 import { CapacityOffload } from './model/capacity-offload.model'
 import { ByteConversionService } from '../../shared/utils/conversions/byte-conversion.service';
@@ -47,27 +47,27 @@ export class CapacityOffloadComponent {
 		this.initializeGraph();		
 	}
 
+    ngOnChanges(changes: { [propName: string]: SimpleChange }) {
+    	this.initializeGraph();
+	}
+
 	private initializeGraph() {
+	if (this.bandiwthChart) {
+		this.bandiwthChart.destroy();
+	}
+	console.log("capacity offload initializing...")
 	let config = JSON.parse(JSON.stringify(DEFAULT_CONFIG));
 
 	config.options.layout.padding.top = 15;
 
 	config.data = {
 		labels: this.cdnLabels.map(value => {
-			let date = new Date(value)
-			let monthName = [
-				"Jan", "Feb", "Mar",
-				"Apr", "May", "Jun", "Jul",
-				"Aug", "Sep", "Oct",
-				"Nov", "Dec"
-			]
-
-			return date.getDate() + ". " + monthName[date.getMonth()];
+			return this.timestampUtils.toShortDate(value);
 		}),
 		datasets: [{
 			lineTension: 0,
 			label: '',
-			data: this.bytesUtils.toGb(this.cdnData[0].data),
+			data: this.bytesUtils.toGb(this.cdnData),
 			fill: true,
 			backgroundColor: COLORS.PINK,
 			borderColor: COLORS.DARK_PINK,
@@ -79,7 +79,7 @@ export class CapacityOffloadComponent {
 			borderColor: COLORS.DARK_BLUE,
 			pointRadius: 0,
 			lineTension: 0,
-			data: this.bytesUtils.toGb(this.p2pData[0].data),
+			data: this.bytesUtils.toGb(this.p2pData),
 		}]
 	};
 
@@ -137,6 +137,8 @@ export class CapacityOffloadComponent {
 				    }]
 	}	
 
+	config.options.scales.xAxes[0].display = true;
+
 	config.options.scales.xAxes[0].ticks = {
 		maxTicksLimit: 15,
 		maxRotation: 0,
@@ -149,7 +151,7 @@ export class CapacityOffloadComponent {
 			if (value !== 0) return [value,'Gbps'];
 		}		
 	}
-
+	console.log(config.data);
     this.bandiwthChart = new Chart(this.canvasElement, config);
   }
 }
