@@ -12,12 +12,12 @@ export class CapacityOffloadService {
 
   constructor(private apiService: ApiService) { }
 
-  getCapacityOffload(): Observable<CapacityOffload> {
+  getCapacityOffload(from?: number, to?: number): Observable<CapacityOffload> {
       return this.apiService
         .post('bandwidth', { 
         	"session_token": localStorage.getItem("session_token"),
-        	"from":1509548400000,
-        	"to":1510844400000 }).map(response => {
+        	"from": from == undefined ? 1509548400000 : from,
+        	"to": to == undefined ? 1510844400000 : to }).map(response => {
         		console.log(response);
 	            this.capacityOffload = new CapacityOffload(
 	            		response['cdn'],
@@ -27,12 +27,12 @@ export class CapacityOffloadService {
         })
   }
 
-  getMaximumValues(): Observable<any> {
+  getMaximumValues(from?: number, to?: number): Observable<any> {
     return this.apiService
         .post('bandwidth', { 
         	"session_token": localStorage.getItem("session_token"),
-        	"from":1509548400000,
-        	"to":1510844400000,
+        	"from": from == undefined ? 1509548400000 : from,
+        	"to": to == undefined ? 1510844400000 : to,
         	"aggregate": "max" }).map(response => {
         		return response
         })
