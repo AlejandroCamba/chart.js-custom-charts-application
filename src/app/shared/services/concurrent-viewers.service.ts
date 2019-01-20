@@ -10,8 +10,6 @@ import { ApiService } from './api.service';
 @Injectable()
 export class ConcurrentViewersService {
   private concurrentViewers :ConcurrentViewers;
-  private cachedFrom: number = undefined; 
-  private cachedTo: number = undefined; 
 
   constructor(
     private apiService: ApiService,

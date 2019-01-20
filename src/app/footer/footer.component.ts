@@ -101,7 +101,7 @@ export class FooterComponent implements OnInit {
   			this.maxP2p = res['p2p'];
   			this.maxCdn = res['cdn'];
 
-  			this.maxCdnChange.emit(this.maxP2p);
+  			this.maxP2pChange.emit(this.maxP2p);
   			this.maxCdnChange.emit(this.maxCdn);
   		}, error => console.log("Error trying to get maximum cdn & p2p value"))
 
@@ -137,7 +137,7 @@ export class FooterComponent implements OnInit {
   			this.maxP2p = res['p2p'];
   			this.maxCdn = res['cdn'];
 
-  			this.maxCdnChange.emit(this.maxP2p);
+  			this.maxP2pChange.emit(this.maxP2p);
   			this.maxCdnChange.emit(this.maxCdn);
   		}, error => console.log("Error trying to get maximum cdn & p2p value"))
 
