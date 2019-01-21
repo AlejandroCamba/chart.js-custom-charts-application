@@ -15,6 +15,8 @@ export class BackgroundGraphComponent {
   	public backgroundChart: Chart;
   	private canvasElement: HTMLCanvasElement;
 
+  	static isBackgroundSet: boolean;
+
   	constructor(private cdr: ChangeDetectorRef){}
 
   	private setCanvasDimensions() {
@@ -43,11 +45,13 @@ export class BackgroundGraphComponent {
 Chart.plugins.register({
 
   beforeDraw: function(chartInstance) {
-  	if(chartInstance.chart.canvas.id == "background-graph-id"){
-    var ctx = chartInstance.chart.ctx;
-    ctx.fillStyle = "rgba(69,135,65,0.3)";
-    ctx.fillRect(0, 0, chartInstance.chart.width, chartInstance.chart.height);
-  	}
+	  	if(chartInstance.chart.canvas.id == "background-graph-id"){
+		    var ctx = chartInstance.chart.ctx;
+		    ctx.fillStyle = "white";
+		    ctx.fillRect(0, 0, chartInstance.chart.width, chartInstance.chart.height);		    	ctx.fillStyle = "rgba(69,135,65,0.3)";
+		    ctx.fillStyle = "rgba(69,135,65,0.3)";
+		    ctx.fillRect(0, 0, chartInstance.chart.width, chartInstance.chart.height);
+		}
   }
 });
 	let config = JSON.parse(JSON.stringify(DEFAULT_CONFIG));
