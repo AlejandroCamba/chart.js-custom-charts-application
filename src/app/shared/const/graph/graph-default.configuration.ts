@@ -1,5 +1,7 @@
 export var DEFAULT_CONFIG = {
 	data: {},
+	rawLabels: {},
+	functions: [],
 	type: 'line',
 	options: {
 		responsive: true,				
