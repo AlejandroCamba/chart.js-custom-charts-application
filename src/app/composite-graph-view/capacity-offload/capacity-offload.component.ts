@@ -45,8 +45,8 @@ export class CapacityOffloadComponent {
   	}
 	
 	ngOnInit() {
-		this.setCanvasDimensions();  
-		this.initializeGraph();		
+		this.setCanvasDimensions();
+		this.initializeGraph();
 	}
 
     ngOnChanges(changes: { [propName: string]: SimpleChange }) {
@@ -58,155 +58,153 @@ export class CapacityOffloadComponent {
 		Chart.defaults.LineWithLine = Chart.defaults.line;
 		Chart.controllers.LineWithLine = Chart.controllers.line.extend({
 		   draw: function(ease) {
-		      Chart.controllers.line.prototype.draw.call(this, ease);
+		      	Chart.controllers.line.prototype.draw.call(this, ease);
 
-		      if (this.chart.tooltip._active && this.chart.tooltip._active.length) {
-		         var activePoint = this.chart.tooltip._active[0],
-		             ctx = this.chart.ctx,
-		             x = activePoint.tooltipPosition().x,
-		             topY = this.chart.scales['y-axis-0'].top,
-		             bottomY = this.chart.scales['y-axis-0'].bottom;
+		      	if (this.chart.tooltip._active && this.chart.tooltip._active.length) {
+		        	var activePoint = this.chart.tooltip._active[0],
+		        	ctx = this.chart.ctx,
+		            x = activePoint.tooltipPosition().x,
+		            topY = this.chart.scales['y-axis-0'].top,
+		            bottomY = this.chart.scales['y-axis-0'].bottom;
 
-		         // draw line
-		         ctx.save();
-		         ctx.beginPath();
-		         ctx.moveTo(x, topY);
-		         ctx.lineTo(x, bottomY + 10);
-		         ctx.lineWidth = 1;
-		         ctx.strokeStyle = 'rgba(0,0,0,0.1)';
-		         ctx.stroke();
-		         ctx.restore();
-		      }
-		   }
+		        	// draw line
+		         	ctx.save();
+		         	ctx.beginPath();
+		         	ctx.moveTo(x, topY);
+		         	ctx.lineTo(x, bottomY + 10);
+		         	ctx.lineWidth = 1;
+		         	ctx.strokeStyle = 'rgba(0,0,0,0.1)';
+		         	ctx.stroke();
+		         	ctx.restore();
+		      	}
+		   	}
 		});
 	}
 
 	private initializeGraph() {
 
-	if (this.bandiwthChart) {
-		this.bandiwthChart.destroy();
-	}
+		if (this.bandiwthChart) {
+			this.bandiwthChart.destroy();
+		}
 
-	let config = JSON.parse(JSON.stringify(DEFAULT_CONFIG));
-	config.options.layout.padding.top = 15;
-	config.type = "LineWithLine";
-	config.rawLabels = JSON.parse(JSON.stringify(this.cdnLabels));
-	config.functions[0] = this.timestampUtils.toFullDateAndTime;//create enum later for function indexes
+		let config = JSON.parse(JSON.stringify(DEFAULT_CONFIG));
+		config.options.layout.padding.top = 15;
+		config.type = "LineWithLine";
+		config.rawLabels = JSON.parse(JSON.stringify(this.cdnLabels));
+		config.functions[0] = this.timestampUtils.toFullDateAndTime;//create enum later for function indexes
 
-	config.data = {
-		labels: this.cdnLabels.map(value => {
-			return this.timestampUtils.toShortDate(value);
-		}),
-		datasets: [{
-			lineTension: 0,
-			label: '',
-			data: this.bytesUtils.toGb(this.cdnData),
-			fill: true,
-			backgroundColor: COLORS.PINK,
-			borderColor: COLORS.DARK_PINK,
-			pointBorderwidth: 1,
-			pointBorderColor: "white",
-			pointRadius: 0,
-			pointHoverRadius: 3,
-			pointHoverBackgroundColor: COLORS.PINK,
-			pointHoverBorderWidth: 1,
-			pointHoverBorderColor: 'white',
-			pointStyle: "rect",
-			pointRotation: 45
-		},{
-			label: '',
-			fill: true,
-			backgroundColor: COLORS.LIGHT_BLUE,
-			borderColor: COLORS.DARK_BLUE,
-			pointRadius: 0,
-			lineTension: 0,
-			data: this.bytesUtils.toGb(this.p2pData),
-	        pointHitRadius: 4,
-			pointBorderwidth: 1,
-			pointBorderColor: "white",
-			pointHoverRadius: 3,
-			pointHoverBackgroundColor: COLORS.DARK_BLUE,
-			pointHoverBorderWidth: 1,
-			pointHoverBorderColor: 'white',
-			pointStyle: "circle",
-			pointRotation: 45
-		}]
-	};
+		config.data = {
+			labels: this.cdnLabels.map(value => {
+				return this.timestampUtils.toShortDate(value);
+			}),
+			datasets: [{
+				lineTension: 0,
+				label: '',
+				data: this.bytesUtils.toGb(this.cdnData),
+				fill: true,
+				backgroundColor: COLORS.PINK,
+				borderColor: COLORS.DARK_PINK,
+				pointBorderwidth: 1,
+				pointBorderColor: "white",
+				pointRadius: 0,
+				pointHoverRadius: 3,
+				pointHoverBackgroundColor: COLORS.PINK,
+				pointHoverBorderWidth: 1,
+				pointHoverBorderColor: 'white',
+				pointStyle: "rect",
+				pointRotation: 45
+			},{
+				label: '',
+				fill: true,
+				backgroundColor: COLORS.LIGHT_BLUE,
+				borderColor: COLORS.DARK_BLUE,
+				pointRadius: 0,
+				lineTension: 0,
+				data: this.bytesUtils.toGb(this.p2pData),
+	        	pointHitRadius: 4,
+				pointBorderwidth: 1,
+				pointBorderColor: "white",
+				pointHoverRadius: 3,
+				pointHoverBackgroundColor: COLORS.DARK_BLUE,
+				pointHoverBorderWidth: 1,
+				pointHoverBorderColor: 'white',
+				pointStyle: "circle",
+				pointRotation: 45
+			}]
+		};
 
-	config.options.annotation = {
-		annotations: [{
-				      drawTime: "afterDatasetsDraw",
-				      id: "hline",
-				      type: "line",
-				      mode: "horizontal",
-				      scaleID: "y-axis-0",
-				      value: this.bytesUtils.toGb(undefined, this.maxP2p),
-				      borderDash: [4],
-				      borderWidth: 2,
-				      borderColor: COLORS.GREEN,
-				      label: {
-				        backgroundColor: "rgba(0,0,0,0)",
-				        content: "Maximum throughput: " + this.bytesUtils.toGb(undefined, this.maxP2p) + " Gbps",
-				        enabled: true,
-				        position: "right",
-				        fontFamily: 'Roboto',
-				        fontColor: 'black',
-				        cornerRadius: 12,
-				        xPadding: 12 ,
-				        yPadding: 6 ,
-				        fontSize: 12 ,
-				        fontStyle: 'normal',
-				        yAdjust: -5,
-				        xAdjust: 0,
-				      }
-				    },{
-				      drawTime: "afterDatasetsDraw",
-				      id: "dline",
-				      type: "line",
-				      mode: "horizontal",
-				      scaleID: "y-axis-0",
-				      value: this.bytesUtils.toGb(undefined, this.maxCdn),
-				      borderDash: [4],
-				      borderWidth: 2,
-				      borderColor: COLORS.BERRY,
-				      label: {
-				        backgroundColor: "rgba(0,0,0,0)",
-				        content: "Maximum CDN contribution: " + this.bytesUtils.toGb(undefined, this.maxCdn) + " Gbps",
-				        enabled: true,
-				        position: "left",
-				        fontFamily: 'Roboto',
-				        fontColor: 'black',
-				        cornerRadius: 12,
-				        xPadding: 12 ,
-				        yPadding: 6 ,
-				        fontSize: 12,
-				        fontStyle: 'normal',
-				        yAdjust: -5,
-				        xAdjust: 0,
-				      }
-				    }]
-	}	
+		config.options.annotation = {
+			annotations: [{
+				drawTime: "afterDatasetsDraw",
+				id: "hline",
+				type: "line",
+				mode: "horizontal",
+				scaleID: "y-axis-0",
+				value: this.bytesUtils.toGb(undefined, this.maxP2p),
+				borderDash: [4],
+				borderWidth: 2,
+				borderColor: COLORS.GREEN,
+				label: {
+				    backgroundColor: "rgba(0,0,0,0)",
+				    content: "Maximum throughput: " + this.bytesUtils.toGb(undefined, this.maxP2p) + " Gbps",
+				    enabled: true,
+				    position: "right",
+				    fontFamily: 'Roboto',
+				    fontColor: 'black',
+				    cornerRadius: 12,
+				    xPadding: 12 ,
+				    yPadding: 6 ,
+				    fontSize: 12 ,
+				    fontStyle: 'normal',
+				    yAdjust: -5,
+				    xAdjust: 0,
+				}
+			},{
+				drawTime: "afterDatasetsDraw",
+				id: "dline",
+				type: "line",
+				mode: "horizontal",
+				scaleID: "y-axis-0",
+				value: this.bytesUtils.toGb(undefined, this.maxCdn),
+				borderDash: [4],
+				borderWidth: 2,
+				borderColor: COLORS.BERRY,
+				label: {
+				    backgroundColor: "rgba(0,0,0,0)",
+				    content: "Maximum CDN contribution: " + this.bytesUtils.toGb(undefined, this.maxCdn) + " Gbps",
+				    enabled: true,
+				    position: "left",
+				    fontFamily: 'Roboto',
+				    fontColor: 'black',
+				    cornerRadius: 12,
+				    xPadding: 12 ,
+				    yPadding: 6 ,
+				    fontSize: 12,
+				    fontStyle: 'normal',
+				    yAdjust: -5,
+				    xAdjust: 0,
+				}
+			}]
+		}	
 
-	config.options.scales.xAxes[0].display = true;
+		config.options.scales.xAxes[0].display = true;
 
-	config.options.scales.xAxes[0].ticks = {
-		maxTicksLimit: 15,
-		maxRotation: 0,
-		minRotation: 0
-	};
+		config.options.scales.xAxes[0].ticks = {
+			maxTicksLimit: 15,
+			maxRotation: 0,
+			minRotation: 0
+		};
 
-	config.options.hover = {
-		mode: "index",
-		intersect: false
-	};
+		config.options.hover = {
+			mode: "index",
+			intersect: false
+		};
 
-	config.options.tooltips = {
-		enabled: false,
-		custom: function(tooltipModel) {
+		config.options.tooltips = {
+			enabled: false,
+			custom: function(tooltipModel) {
                 // Tooltip Element
                 var tooltipEl = document.getElementById('chartjs-tooltip');
-
-                console.log(tooltipModel);
 
                 // Hide if no tooltip
                 if (tooltipModel.opacity === 0) {
@@ -215,6 +213,7 @@ export class CapacityOffloadComponent {
                 }
 
                 tooltipModel.caretX = tooltipModel.caretX + 70;
+
                 // Set caret Position
                 tooltipModel.xAlign = "right";
                 tooltipEl.classList.remove('center', 'above', 'no-transform');
@@ -227,21 +226,20 @@ export class CapacityOffloadComponent {
                 function getBody(bodyItem) {
                     return bodyItem.lines;
                 }
-                
+
                 let p2pValue = config.data.datasets[1].data[tooltipModel.dataPoints[0].index]
                 let httpValue = config.data.datasets[0].data[tooltipModel.dataPoints[0].index]
                 let totalValue = (p2pValue + httpValue);
 
+                //write content of tooltip elements
                 document.getElementById("title").innerHTML = config.functions[0](config.rawLabels[tooltipModel.dataPoints[0].index]);
                 document.getElementById("p2p-value").innerHTML = p2pValue.toFixed(2);
                 document.getElementById("http-value").innerHTML = httpValue.toFixed(2);
                 document.getElementById("total-value").innerHTML = totalValue.toFixed(2);
                 document.getElementById("spike-red").innerHTML="NaN";
 
-                // `this` will be the overall tooltip
                 var position = this._chart.canvas.getBoundingClientRect();
 
-                // Display, position, and set styles for font
                 tooltipEl.style.opacity = "1";
                 tooltipEl.style.position = 'absolute';
                 tooltipEl.style.left = position.left + window.pageXOffset + tooltipModel.caretX + 'px';
@@ -252,14 +250,15 @@ export class CapacityOffloadComponent {
                 tooltipEl.style.padding = tooltipModel.yPadding + 'px ' + tooltipModel.xPadding + 'px';
                 tooltipEl.style.pointerEvents = 'none';
             }
-	}
-	config.options.scales.yAxes[0].ticks = {
-		maxTicksLimit: 3,
-		callback: function(value, index) {
-			if (value !== 0) return [value,'Gbps'];
-		}		
-	}
-	console.log(config.data);
-    this.bandiwthChart = new Chart(this.canvasElement, config);
-  }
+		}
+
+		config.options.scales.yAxes[0].ticks = {
+			maxTicksLimit: 3,
+			callback: function(value, index) {
+				if (value !== 0) return [value,'Gbps'];
+			}
+		}
+
+    	this.bandiwthChart = new Chart(this.canvasElement, config);
+  	}
 }

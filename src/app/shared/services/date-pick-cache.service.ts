@@ -5,8 +5,8 @@ const DEFAULT_FROM = 1509548400000;
 
 @Injectable()
 export class DatePickCacheService {
-  private cachedFrom: number = DEFAULT_FROM; 
-  private cachedTo: number = DEFAULT_TO; 
+  private cachedFrom: number = DEFAULT_FROM;
+  private cachedTo: number = DEFAULT_TO;
 
   constructor() { }
 

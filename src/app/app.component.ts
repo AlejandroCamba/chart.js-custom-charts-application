@@ -16,10 +16,10 @@ export class AppComponent implements OnInit{
  	}
 
  	ngOnInit() {
- 		/*if (this.authService.getToken()!) {   //<-- comment this code block to remain logged in
+ 		if (this.authService.getToken()!) {   //<-- comment this code block to remain logged in
 	 		this.authService.logout().subscribe(res => {
 	 			console.log("page reloaded, logging out...");
 	 		});
- 		}*/
+ 		}
  	}
 }

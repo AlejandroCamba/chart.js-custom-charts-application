@@ -7,9 +7,7 @@ import { catchError } from 'rxjs/operators';
 
 @Injectable()
 export class ApiService {
-  constructor(
-    private http: HttpClient,
-  ) {}
+  constructor(private http: HttpClient) {}
 
   post(path: string, body: Object = {}): Observable<any> {
     return this.http.post(
@@ -24,7 +22,7 @@ export class ApiService {
       'Accept': 'application/json',
       'Content-Type': 'application/json'
     };
-    
+
     return new HttpHeaders(headers)
   }
 

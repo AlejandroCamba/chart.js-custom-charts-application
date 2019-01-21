@@ -15,7 +15,7 @@ export class CompositeGraphViewComponent implements OnInit {
 	private concurrentViewers: ConcurrentViewers;
 
 	// capacity offload graph
-	@Input() private p2pData: Array<number>;
+  @Input() private p2pData: Array<number>;
 	@Input() private cdnData: Array<number>;
 
 	@Input() private p2pLabels: Array<number>;
@@ -36,10 +36,10 @@ export class CompositeGraphViewComponent implements OnInit {
   	ngOnInit() {
   		this.capacityOffloadService.getCapacityOffload().subscribe( res => {
   			this.capacityOffloadData = res;
-  			
+
   			this.p2pData = Object.assign([], this.capacityOffloadData.getP2pData());
   			this.cdnData = Object.assign([], this.capacityOffloadData.getCdnData());
-  			
+
   			this.p2pLabels = Object.assign([], this.capacityOffloadData.getP2pLabels());
   			this.cdnLabels = Object.assign([], this.capacityOffloadData.getCdnLabels());
   		},error=> console.log("Error trying to get capacity offload data"));
@@ -58,6 +58,6 @@ export class CompositeGraphViewComponent implements OnInit {
   	}
 
     ngOnDestroy() {
-        this.cdr.detach();
+      this.cdr.detach();
     }
 }

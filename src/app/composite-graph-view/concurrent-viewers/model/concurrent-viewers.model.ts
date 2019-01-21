@@ -1,6 +1,5 @@
 export class ConcurrentViewers {
 	private viewersTuples: Array<Array<number>>;
-
 	private viewersTimestamp: Array<number> = [];
 	private viewers: Array<number> = [];
 
@@ -9,7 +8,7 @@ export class ConcurrentViewers {
 
 		this.mapDataIntoDisplayable();
 	}
-	
+
 	private setGraph(tuples: Array<Array<number>>, timestamp: Array<number>, value: Array<number>){
 		tuples.reduce((curr, next) => {
             return (curr.concat(next));

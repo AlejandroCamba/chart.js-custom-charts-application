@@ -4,7 +4,7 @@ export var DEFAULT_CONFIG = {
 	functions: [],
 	type: 'line',
 	options: {
-		responsive: true,				
+		responsive: true,
 		maintainAspectRatio: true,
 		layout: {
 		    padding: {

@@ -43,19 +43,19 @@ export class FooterComponent implements OnInit {
 
 	//concurrent viewers graph
   	@Input() viewersData: Array<any>;
-  	@Input() viewersLabels: Array<any>;  	
+  	@Input() viewersLabels: Array<any>;
 
   	@Output() viewersDataChange = new EventEmitter();
   	@Output() viewersLabelsChange = new EventEmitter();
 
 	//background graph
   	@Input() backgroundData: Array<any>;
-  	@Input() backgroundLabels: Array<any>;  	
+  	@Input() backgroundLabels: Array<any>;
 
   	@Output() backgroundDataChange = new EventEmitter();
   	@Output() backgroundLabelsChange = new EventEmitter();
 
-	private pairFormattedDates: Map<number, string> = new Map(); 
+	private pairFormattedDates: Map<number, string> = new Map();
 
   	constructor(
   		private timestampConversion: TimestampConversionService,
@@ -70,11 +70,13 @@ export class FooterComponent implements OnInit {
  		this.cdnLabels.map(value => {
 			if (this.timestampConversion.toFulltDate(value) == cdnFormattedDates[i]) {
 				if (i == (cdnFormattedDates.length - 1) ) {
-					this.pairFormattedDates.set(this.cdnLabels[this.cdnLabels.length - 1], cdnFormattedDates[i]);
+					this.pairFormattedDates.set(
+						this.cdnLabels[this.cdnLabels.length - 1],
+						cdnFormattedDates[i]);
 				} else {
 					this.pairFormattedDates.set(value, cdnFormattedDates[i++]);
 				}
-			}			
+			}
  		})
  	}
 
@@ -89,53 +91,55 @@ export class FooterComponent implements OnInit {
 
 	setInitialDate(timestamp) {
 		this.dateCache.setFrom(timestamp);
+
   		this.capacityOffloadService.getCapacityOffload(timestamp, undefined).subscribe( res => {
-  			this.capacityOffloadData = res;
-  			
-  			this.p2pData = Object.assign([], this.capacityOffloadData.getP2pData());
-  			this.cdnData = Object.assign([], this.capacityOffloadData.getCdnData());
-  			
-  			this.p2pLabels = Object.assign([], this.capacityOffloadData.getP2pLabels());
-  			this.cdnLabels = Object.assign([], this.capacityOffloadData.getCdnLabels());
+	  		this.capacityOffloadData = res;
+	  			
+	  		this.p2pData = Object.assign([], this.capacityOffloadData.getP2pData());
+	  		this.cdnData = Object.assign([], this.capacityOffloadData.getCdnData());
+	  			
+	  		this.p2pLabels = Object.assign([], this.capacityOffloadData.getP2pLabels());
+	  		this.cdnLabels = Object.assign([], this.capacityOffloadData.getCdnLabels());
 
-  			this.backgroundData = Object.assign([], this.capacityOffloadData.getP2pData());
-  			this.backgroundLabels = Object.assign([], this.capacityOffloadData.getCdnLabels());
+	  		this.backgroundData = Object.assign([], this.capacityOffloadData.getP2pData());
+	  		this.backgroundLabels = Object.assign([], this.capacityOffloadData.getCdnLabels());
 
-  			this.backgroundDataChange.emit(this.backgroundData);
-  			this.backgroundLabelsChange.emit(this.backgroundLabels);
-  			this.p2pDataChange.emit(this.p2pData);
-  			this.cdnDataChange.emit(this.cdnData);
-  			this.p2pLabelsChange.emit(this.p2pLabels);
-  			this.cdnLabelsChange.emit(this.cdnLabels);
-  		},error=> console.log("Error trying to get capacity offload data update"));
+	  		this.backgroundDataChange.emit(this.backgroundData);
+	  		this.backgroundLabelsChange.emit(this.backgroundLabels);
+	  		this.p2pDataChange.emit(this.p2pData);
+	  		this.cdnDataChange.emit(this.cdnData);
+	  		this.p2pLabelsChange.emit(this.p2pLabels);
+	  		this.cdnLabelsChange.emit(this.cdnLabels);
+  		}, error=> console.log("Error trying to get capacity offload data update"));
 
-  		this.capacityOffloadService.getMaximumValues(timestamp, undefined).subscribe(res => {
-  			this.maxP2p = res['p2p'];
-  			this.maxCdn = res['cdn'];
+	  	this.capacityOffloadService.getMaximumValues(timestamp, undefined).subscribe(res => {
+	  		this.maxP2p = res['p2p'];
+	  		this.maxCdn = res['cdn'];
 
-  			this.maxP2pChange.emit(this.maxP2p);
-  			this.maxCdnChange.emit(this.maxCdn);
-  		}, error => console.log("Error trying to get maximum cdn & p2p value"))
+	  		this.maxP2pChange.emit(this.maxP2p);
+	  		this.maxCdnChange.emit(this.maxCdn);
+	  	}, error => console.log("Error trying to get maximum cdn & p2p value"))
 
   		this.concurrentViewersService.getConcurrentViewers(timestamp, undefined).subscribe(res => {
-  			this.concurrentViewers = res;
+		  	this.concurrentViewers = res;
 
-  			this.viewersData = Object.assign([], this.concurrentViewers.getViewers());
-  			this.viewersLabels = Object.assign([], this.concurrentViewers.getViewersLabels());
+		  	this.viewersData = Object.assign([], this.concurrentViewers.getViewers());
+		  	this.viewersLabels = Object.assign([], this.concurrentViewers.getViewersLabels());
 
-  			this.viewersDataChange.emit(this.viewersData);
-  			this.viewersLabelsChange.emit(this.viewersLabels);
-  		})
+		  	this.viewersDataChange.emit(this.viewersData);
+		  	this.viewersLabelsChange.emit(this.viewersLabels);
+  		}, error => console.log("Error trying to get current viewers"))
 	}
 
 	setFinalDate(timestamp) {
-		this.dateCache.setTo(timestamp)
+		this.dateCache.setTo(timestamp);
+
   		this.capacityOffloadService.getCapacityOffload(undefined, timestamp).subscribe( res => {
   			this.capacityOffloadData = res;
   			
   			this.p2pData = Object.assign([], this.capacityOffloadData.getP2pData());
   			this.cdnData = Object.assign([], this.capacityOffloadData.getCdnData());
-  			
+
   			this.p2pLabels = Object.assign([], this.capacityOffloadData.getP2pLabels());
   			this.cdnLabels = Object.assign([], this.capacityOffloadData.getCdnLabels());
 
@@ -166,6 +170,6 @@ export class FooterComponent implements OnInit {
 
   			this.viewersDataChange.emit(this.viewersData);
   			this.viewersLabelsChange.emit(this.viewersLabels);
-  		})
+  		}, error => console.log("Error trying to get viewers"))
 	}
 }
