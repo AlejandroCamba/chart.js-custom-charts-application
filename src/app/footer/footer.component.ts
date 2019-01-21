@@ -48,6 +48,13 @@ export class FooterComponent implements OnInit {
   	@Output() viewersDataChange = new EventEmitter();
   	@Output() viewersLabelsChange = new EventEmitter();
 
+	//background graph
+  	@Input() backgroundData: Array<any>;
+  	@Input() backgroundLabels: Array<any>;  	
+
+  	@Output() backgroundDataChange = new EventEmitter();
+  	@Output() backgroundLabelsChange = new EventEmitter();
+
 	private pairFormattedDates: Map<number, string> = new Map(); 
 
   	constructor(
@@ -91,6 +98,11 @@ export class FooterComponent implements OnInit {
   			this.p2pLabels = Object.assign([], this.capacityOffloadData.getP2pLabels());
   			this.cdnLabels = Object.assign([], this.capacityOffloadData.getCdnLabels());
 
+  			this.backgroundData = Object.assign([], this.capacityOffloadData.getP2pData());
+  			this.backgroundLabels = Object.assign([], this.capacityOffloadData.getCdnLabels());
+
+  			this.backgroundDataChange.emit(this.backgroundData);
+  			this.backgroundLabelsChange.emit(this.backgroundLabels);
   			this.p2pDataChange.emit(this.p2pData);
   			this.cdnDataChange.emit(this.cdnData);
   			this.p2pLabelsChange.emit(this.p2pLabels);
@@ -127,6 +139,11 @@ export class FooterComponent implements OnInit {
   			this.p2pLabels = Object.assign([], this.capacityOffloadData.getP2pLabels());
   			this.cdnLabels = Object.assign([], this.capacityOffloadData.getCdnLabels());
 
+  			this.backgroundData = Object.assign([], this.capacityOffloadData.getP2pData());
+  			this.backgroundLabels = Object.assign([], this.capacityOffloadData.getCdnLabels());
+
+  			this.backgroundDataChange.emit(this.backgroundData);
+  			this.backgroundLabelsChange.emit(this.backgroundLabels);
   			this.p2pDataChange.emit(this.p2pData);
   			this.cdnDataChange.emit(this.cdnData);
   			this.p2pLabelsChange.emit(this.p2pLabels);

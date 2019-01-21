@@ -1,5 +1,6 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectorRef, OnChanges, SimpleChange} from '@angular/core';
 import { Chart }  from 'chart.js';
+import { DEFAULT_CONFIG } from '../../shared/const/graph/graph-default.configuration'
 
 @Component({
   selector: 'background-graph',
@@ -14,7 +15,7 @@ export class BackgroundGraphComponent {
   	public backgroundChart: Chart;
   	private canvasElement: HTMLCanvasElement;
 
-  	constructor(){}
+  	constructor(private cdr: ChangeDetectorRef){}
 
   	private setCanvasDimensions() {
     	this.canvasElement = <HTMLCanvasElement> document.getElementById('background-graph-id');
@@ -26,57 +27,45 @@ export class BackgroundGraphComponent {
 		this.initializeGraph();		
 	}
 
+    ngOnDestroy() {
+        this.cdr.detach();
+    }
+
+	ngOnChanges(changes: { [propName: string]: SimpleChange }) {
+    	this.initializeGraph();
+	}
+
 	private initializeGraph() {
-    let config = {
-			type: 'line',
-			data: {
-				labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+		if (this.backgroundChart) {
+		this.backgroundChart.destroy();
+	}
+
+Chart.plugins.register({
+
+  beforeDraw: function(chartInstance) {
+  	if(chartInstance.chart.canvas.id == "background-graph-id"){
+    var ctx = chartInstance.chart.ctx;
+    ctx.fillStyle = "rgba(69,135,65,0.3)";
+    ctx.fillRect(0, 0, chartInstance.chart.width, chartInstance.chart.height);
+  	}
+  }
+});
+	let config = JSON.parse(JSON.stringify(DEFAULT_CONFIG));
+
+	config.data = {
+			labels: this.backgroundLabels,
 				datasets: [{
 					lineTension: 0,
 					label: '',
-					data: [1,2,3,4,5,6,7],
+					data: this.backgroundData,
 					fill: true,
+					borderColor: 'rgba(69,135,65,0.0)',
+					backgroundColor:'rgba(69,135,65,0.3)',
 					pointRadius: 0
-				}]
-			},
-			options: {
-				responsive: true,
-				maintainAspectRatio: true,
-				legend: {
-				    display: false,
-				    labels: {
-				      	boxWidth: 0
-				    }
-				},
-				tooltips: {
-					enabled: false
-				},
-				hover: {
-					mode: 'nearest',
-					intersect: true
-				},
-				scales: {
-					xAxes: [{
-						display: false,
-						gridLines: {
-	                		color: "rgba(0, 0, 0, 0)",
-						},
-						scaleLabel: {
-							display: false,
-						}
-					}],
-					yAxes: [{
-						display: false,
-						gridLines: {
-	                		color: "rgba(0, 0, 0, 0)",
-						},
-						scaleLabel: {
-							display: false,
-						}
-					}]
-				}
-			}
-		};
+				}]			
+	}
+
+	config.options.scales.yAxes[0].display = false;
 
     this.backgroundChart = new Chart(this.canvasElement, config);
   }

@@ -171,7 +171,7 @@ export class CapacityOffloadComponent {
 				      borderColor: COLORS.BERRY,
 				      label: {
 				        backgroundColor: "rgba(0,0,0,0)",
-				        content: "Maximum CDN contrinution: " + this.bytesUtils.toGb(undefined, this.maxCdn) + " Gbps",
+				        content: "Maximum CDN contribution: " + this.bytesUtils.toGb(undefined, this.maxCdn) + " Gbps",
 				        enabled: true,
 				        position: "left",
 				        fontFamily: 'Roboto',
