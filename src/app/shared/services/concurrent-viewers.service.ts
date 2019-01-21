@@ -16,13 +16,12 @@ export class ConcurrentViewersService {
     private dateCache: DatePickCacheService) { }
 
   getConcurrentViewers(from?: number, to?: number): Observable<ConcurrentViewers> {
-      return this.apiService
-        .post('audience', {
-        	"session_token": localStorage.getItem("session_token"),
-        	"from": this.dateCache.getFrom(),
-        	"to": this.dateCache.getTo() }).map(response => {
-        		this.concurrentViewers = new ConcurrentViewers(response["audience"]);
-        		return this.concurrentViewers;
+      return this.apiService.post('audience', {
+        "session_token": localStorage.getItem("session_token"),
+        "from": this.dateCache.getFrom(),
+        "to": this.dateCache.getTo() }).map(response => {
+          this.concurrentViewers = new ConcurrentViewers(response["audience"]);
+          return this.concurrentViewers;
         })
   }
 }

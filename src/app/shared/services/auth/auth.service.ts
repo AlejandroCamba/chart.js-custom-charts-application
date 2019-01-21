@@ -13,16 +13,13 @@ export class AuthService {
   	constructor(private apiService: ApiService) { }
 
   	login(userCredentials: UserCredentials): Observable<string> {
-      	return this.apiService
-        	.post('auth', 
-        		{
-        			"identifiant": userCredentials.getIdentifiant(),
-        			"password": userCredentials.getPassword()
-        		}
-        		).map(response => {
-                localStorage.setItem("session_token", response.session_token);
-            		return localStorage.getItem("session_token");
-        		})
+      return this.apiService.post('auth', {
+        "identifiant": userCredentials.getIdentifiant(),
+        "password": userCredentials.getPassword()
+      }).map(response => {
+        localStorage.setItem("session_token", response.session_token);
+        return localStorage.getItem("session_token");
+      })
   	}
 
     getToken(): string {

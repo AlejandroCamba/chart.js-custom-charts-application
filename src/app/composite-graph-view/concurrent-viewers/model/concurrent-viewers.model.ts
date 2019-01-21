@@ -1,6 +1,5 @@
 export class ConcurrentViewers {
 	private viewersTuples: Array<Array<number>>;
-
 	private viewersTimestamp: Array<number> = [];
 	private viewers: Array<number> = [];
 

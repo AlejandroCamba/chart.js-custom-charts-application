@@ -18,30 +18,25 @@ export class CapacityOffloadService {
     private dateCache: DatePickCacheService) { }
 
   getCapacityOffload(from?: number, to?: number): Observable<CapacityOffload> {
-      return this.apiService
-        .post('bandwidth', { 
-        	"session_token": localStorage.getItem("session_token"),
-        	"from": this.dateCache.getFrom(),
-        	"to": this.dateCache.getTo() }).map(response => {
-	            this.capacityOffload = new CapacityOffload(
-	            		response['cdn'],
-	            		response['p2p']
-	            	);
-              console.log("POST /bandwith successful");
-            return this.capacityOffload;
-        })
+    return this.apiService.post('bandwidth', { 
+      "session_token": localStorage.getItem("session_token"),
+      "from": this.dateCache.getFrom(),
+      "to": this.dateCache.getTo() }).map(response => {
+	      this.capacityOffload = new CapacityOffload(
+	        response['cdn'],
+	        response['p2p']);
+          console.log("POST /bandwith successful");
+          return this.capacityOffload })
   }
 
   getMaximumValues(from?: number, to?: number): Observable<any> {
-    return this.apiService
-        .post('bandwidth', { 
-        	"session_token": localStorage.getItem("session_token"),
-        	"from": this.dateCache.getFrom(),
-        	"to": this.dateCache.getTo(),
-        	"aggregate": "max" }).map(response => {
-           console.log("POST /bandwith max values successful");
-           console.log("max values: cdn:" + response["cdn"] + " p2p:" + response["p2p"])
-        		return response
-        })
-  	}  
+    return this.apiService.post('bandwidth', { 
+      "session_token": localStorage.getItem("session_token"),
+      "from": this.dateCache.getFrom(),
+      "to": this.dateCache.getTo(),
+      "aggregate": "max" }).map(response => {
+        console.log("POST /bandwith max values successful");
+        console.log("max values: cdn:" + response["cdn"] + " p2p:" + response["p2p"])
+        return response })
+  }  
 }

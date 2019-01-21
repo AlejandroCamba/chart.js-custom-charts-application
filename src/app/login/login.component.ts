@@ -18,10 +18,10 @@ export class LoginComponent implements OnInit{
   	constructor(private authService: AuthService, private formBuilder: FormBuilder){}
 
   	ngOnInit() {
-        this.loginForm = this.formBuilder.group({
-            username: ['', Validators.required],
-            password: ['', Validators.required]
-        });
+      this.loginForm = this.formBuilder.group({
+        username: ['', Validators.required],
+        password: ['', Validators.required]
+      });
   	}
 
     get f() { return this.loginForm.controls; }
@@ -39,7 +39,6 @@ export class LoginComponent implements OnInit{
         this.authService.login(
           new UserCredentials(this.f.username.value, this.f.password.value)).subscribe( 
             	token => { console.log("token: " + token) },
-     	 		    err => console.error(err)
-        );
+     	 		    err => console.error(err));
     }
 }

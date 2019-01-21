@@ -35,32 +35,34 @@ export class ConcurrentViewersComponent {
 	}
 
 	private initializeGraph() {
-	if (this.viewersChart) {
-		this.viewersChart.destroy();
-	}
-	let config = JSON.parse(JSON.stringify(DEFAULT_CONFIG));
+	
+		if (this.viewersChart) {
+			this.viewersChart.destroy();
+		}
+
+		let config = JSON.parse(JSON.stringify(DEFAULT_CONFIG));
 
 		config.data = {		
 			labels: this.viewersLabels.map(value => {
 				return this.timestampUtils.toShortDate(value);
-				}),
-				datasets: [{
-					lineTension: 0,
-					label: '',
-					data: this.viewersData,
-					fill: false,
-					borderColor: '#E65F00',
-					pointRadius: 0
-				}]			
+			}),
+			datasets: [{
+				lineTension: 0,
+				label: '',
+				data: this.viewersData,
+				fill: false,
+				borderColor: '#E65F00',
+				pointRadius: 0
+			}]			
 		};
 
 		config.options.scales.yAxes[0].ticks = {
-							maxTicksLimit: 3,			
-							callback: function(value, index) {
-			                	if (value !== 0) return value;
-			               	}			
+			maxTicksLimit: 3,			
+			callback: function(value, index) {
+			    if (value !== 0) return value;
+			}			
 		 };
 
-    this.viewersChart = new Chart(this.canvasElement, config);
-  }
+  		this.viewersChart = new Chart(this.canvasElement, config);
+  	}
 }

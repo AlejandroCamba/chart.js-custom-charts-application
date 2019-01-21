@@ -15,7 +15,7 @@ export class CompositeGraphViewComponent implements OnInit {
 	private concurrentViewers: ConcurrentViewers;
 
 	// capacity offload graph
-	@Input() private p2pData: Array<number>;
+  @Input() private p2pData: Array<number>;
 	@Input() private cdnData: Array<number>;
 
 	@Input() private p2pLabels: Array<number>;
@@ -58,6 +58,6 @@ export class CompositeGraphViewComponent implements OnInit {
   	}
 
     ngOnDestroy() {
-        this.cdr.detach();
+      this.cdr.detach();
     }
 }
