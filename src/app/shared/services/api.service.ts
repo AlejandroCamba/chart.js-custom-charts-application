@@ -22,7 +22,7 @@ export class ApiService {
       'Accept': 'application/json',
       'Content-Type': 'application/json'
     };
-    
+
     return new HttpHeaders(headers)
   }
 

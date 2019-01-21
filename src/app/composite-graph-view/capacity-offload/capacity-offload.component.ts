@@ -45,8 +45,8 @@ export class CapacityOffloadComponent {
   	}
 	
 	ngOnInit() {
-		this.setCanvasDimensions();  
-		this.initializeGraph();		
+		this.setCanvasDimensions();
+		this.initializeGraph();
 	}
 
     ngOnChanges(changes: { [propName: string]: SimpleChange }) {
@@ -226,7 +226,7 @@ export class CapacityOffloadComponent {
                 function getBody(bodyItem) {
                     return bodyItem.lines;
                 }
-                
+
                 let p2pValue = config.data.datasets[1].data[tooltipModel.dataPoints[0].index]
                 let httpValue = config.data.datasets[0].data[tooltipModel.dataPoints[0].index]
                 let totalValue = (p2pValue + httpValue);
@@ -256,7 +256,7 @@ export class CapacityOffloadComponent {
 			maxTicksLimit: 3,
 			callback: function(value, index) {
 				if (value !== 0) return [value,'Gbps'];
-			}		
+			}
 		}
 
     	this.bandiwthChart = new Chart(this.canvasElement, config);

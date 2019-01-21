@@ -35,9 +35,9 @@ export class LoginComponent implements OnInit{
       }
 
       this.loading = true;
-        
+
       this.authService.login(
-        new UserCredentials(this.f.username.value, this.f.password.value)).subscribe( 
+        new UserCredentials(this.f.username.value, this.f.password.value)).subscribe(
           token => { console.log("token: " + token) },
      	 		err => console.error(err));
     }

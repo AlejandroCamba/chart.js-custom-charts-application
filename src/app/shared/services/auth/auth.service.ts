@@ -24,11 +24,11 @@ export class AuthService {
 
     getToken(): string {
       return localStorage.getItem("session_token");
-    }    
+    }
 
     logout(): Observable<boolean> {
-      return this.apiService.post('logout', 
-        { "session_token": localStorage.getItem("session_token") } 
+      return this.apiService.post('logout',
+        { "session_token": localStorage.getItem("session_token") }
        ).map(res => {
          localStorage.clear();
          return true;

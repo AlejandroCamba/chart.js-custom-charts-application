@@ -43,19 +43,19 @@ export class FooterComponent implements OnInit {
 
 	//concurrent viewers graph
   	@Input() viewersData: Array<any>;
-  	@Input() viewersLabels: Array<any>;  	
+  	@Input() viewersLabels: Array<any>;
 
   	@Output() viewersDataChange = new EventEmitter();
   	@Output() viewersLabelsChange = new EventEmitter();
 
 	//background graph
   	@Input() backgroundData: Array<any>;
-  	@Input() backgroundLabels: Array<any>;  	
+  	@Input() backgroundLabels: Array<any>;
 
   	@Output() backgroundDataChange = new EventEmitter();
   	@Output() backgroundLabelsChange = new EventEmitter();
 
-	private pairFormattedDates: Map<number, string> = new Map(); 
+	private pairFormattedDates: Map<number, string> = new Map();
 
   	constructor(
   		private timestampConversion: TimestampConversionService,
@@ -71,12 +71,12 @@ export class FooterComponent implements OnInit {
 			if (this.timestampConversion.toFulltDate(value) == cdnFormattedDates[i]) {
 				if (i == (cdnFormattedDates.length - 1) ) {
 					this.pairFormattedDates.set(
-						this.cdnLabels[this.cdnLabels.length - 1], 
+						this.cdnLabels[this.cdnLabels.length - 1],
 						cdnFormattedDates[i]);
 				} else {
 					this.pairFormattedDates.set(value, cdnFormattedDates[i++]);
 				}
-			}			
+			}
  		})
  	}
 
@@ -139,7 +139,7 @@ export class FooterComponent implements OnInit {
   			
   			this.p2pData = Object.assign([], this.capacityOffloadData.getP2pData());
   			this.cdnData = Object.assign([], this.capacityOffloadData.getCdnData());
-  			
+
   			this.p2pLabels = Object.assign([], this.capacityOffloadData.getP2pLabels());
   			this.cdnLabels = Object.assign([], this.capacityOffloadData.getCdnLabels());
 

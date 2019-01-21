@@ -26,8 +26,8 @@ export class ConcurrentViewersComponent {
   	}
 	
 	ngOnInit() {
-		this.setCanvasDimensions();  
-		this.initializeGraph();		
+		this.setCanvasDimensions();
+		this.initializeGraph();
 	}
     
     ngOnChanges(changes: { [propName: string]: SimpleChange }) {
@@ -42,7 +42,7 @@ export class ConcurrentViewersComponent {
 
 		let config = JSON.parse(JSON.stringify(DEFAULT_CONFIG));
 
-		config.data = {		
+		config.data = {
 			labels: this.viewersLabels.map(value => {
 				return this.timestampUtils.toShortDate(value);
 			}),
@@ -53,14 +53,14 @@ export class ConcurrentViewersComponent {
 				fill: false,
 				borderColor: '#E65F00',
 				pointRadius: 0
-			}]			
+			}]
 		};
 
 		config.options.scales.yAxes[0].ticks = {
-			maxTicksLimit: 3,			
+			maxTicksLimit: 3,
 			callback: function(value, index) {
 			    if (value !== 0) return value;
-			}			
+			}
 		 };
 
   		this.viewersChart = new Chart(this.canvasElement, config);

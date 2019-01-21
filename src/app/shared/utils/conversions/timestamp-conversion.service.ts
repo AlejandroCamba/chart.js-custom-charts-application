@@ -9,9 +9,9 @@ const MONTH_NAME = [
 
 const SHORT_MONTH_NAME = [
 	"Jan", "Feb", "Mar",
-	"Apr", "May", "Jun", "Jul",
-	"Aug", "Sep", "Oct",
-	"Nov", "Dec"
+	"Apr", "May", "Jun", 
+	"Jul", "Aug", "Sep", 
+	"Oct", "Nov", "Dec"
 ];
 
 const WEEK_DAY = [
@@ -26,7 +26,7 @@ export class TimestampConversionService {
   	toShortDate(timestamp: number): string {
 		let date = new Date(timestamp);
 
-		return date.getDate() + ". " + SHORT_MONTH_NAME[date.getMonth()];  		
+		return date.getDate() + ". " + SHORT_MONTH_NAME[date.getMonth()];
   	}
 
   	toFulltDate(timestamp: number): string {
