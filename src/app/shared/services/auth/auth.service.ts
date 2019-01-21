@@ -17,7 +17,7 @@ export class AuthService {
 
   login(userCredentials: UserCredentials): Observable<string> {
     return this.apiService.post('auth', {
-      
+
       "identifiant": userCredentials.getIdentifiant(),
       "password": userCredentials.getPassword()
     }).map(response => {
@@ -33,9 +33,11 @@ export class AuthService {
   }
 
   logout(): Observable<boolean> {
+    
     return this.apiService.post('logout',
       { "session_token": localStorage.getItem("session_token") }
     ).map(res => {
+
       localStorage.clear();
         return true;
     });
