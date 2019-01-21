@@ -88,7 +88,6 @@ export class CapacityOffloadComponent {
 	}
 
 	let config = JSON.parse(JSON.stringify(DEFAULT_CONFIG));
-
 	config.options.layout.padding.top = 15;
 	config.type = "LineWithLine";
 	config.rawLabels = JSON.parse(JSON.stringify(this.cdnLabels));
@@ -203,37 +202,6 @@ export class CapacityOffloadComponent {
 
 	config.options.tooltips = {
 		enabled: false,
-		/*mode: "index",
-		intersect: true,
-		backgroundColor: "white",
-		titleFontColor: "black",
-		titleFontFamily: "Arial",
-		borderWidth: 1,
-		borderColor: "rgba(0,0,0,0.2)",
-		cornerRadius: 3,
-		callbacks: {
-			title: function(tooltipItem, chart){
-				console.log("time value for index" + config.rawLabels[tooltipItem[0].index]);
-				return config.functions[0](config.rawLabels[tooltipItem[0].index]);
-			},
-		    label: function (t, d) {
-                    if (t.datasetIndex === 0) {
-                        return 'HTTP: ' + t.yLabel.toFixed(2) + "Gbps";
-                    } else if (t.datasetIndex === 1) {
-                        return 'P2P ' + t.yLabel.toFixed(2) + "Gbps";
-                    }
-			},
-			labelTextColor: function(tooltipItem, chart){
-				if (tooltipItem.datasetIndex === 0) {
-					return 'blue'
-				} else {
-					return 'black'
-				}
-			},
-			footer: function(tooltipItem, chart){
-				return "footer"
-			}
-		},*/
 		custom: function(tooltipModel) {
                 // Tooltip Element
                 var tooltipEl = document.getElementById('chartjs-tooltip');
@@ -246,8 +214,6 @@ export class CapacityOffloadComponent {
                     return;
                 }
 
-                console.log("tooltip model:");
-                console.log(tooltipModel);
                 tooltipModel.caretX = tooltipModel.caretX + 70;
                 // Set caret Position
                 tooltipModel.xAlign = "right";
@@ -261,33 +227,17 @@ export class CapacityOffloadComponent {
                 function getBody(bodyItem) {
                     return bodyItem.lines;
                 }
-/*
-                // Set Text
-                if (tooltipModel.body) {
-                    var titleLines = tooltipModel.title || [];
-                    var bodyLines = tooltipModel.body.map(getBody);
+                
+                let p2pValue = config.data.datasets[1].data[tooltipModel.dataPoints[0].index]
+                let httpValue = config.data.datasets[0].data[tooltipModel.dataPoints[0].index]
+                let totalValue = (p2pValue + httpValue);
 
-                    var innerHtml = '<thead>';
+                document.getElementById("title").innerHTML = config.functions[0](config.rawLabels[tooltipModel.dataPoints[0].index]);
+                document.getElementById("p2p-value").innerHTML = p2pValue.toFixed(2);
+                document.getElementById("http-value").innerHTML = httpValue.toFixed(2);
+                document.getElementById("total-value").innerHTML = totalValue.toFixed(2);
+                document.getElementById("spike-red").innerHTML="NaN";
 
-                    titleLines.forEach(function(title) {
-                        innerHtml += '<tr><th>' + title + '</th></tr>';
-                    });
-                    innerHtml += '</thead><tbody>';
-
-                    bodyLines.forEach(function(body, i) {
-                        var colors = tooltipModel.labelColors[i];
-                        var style = 'background:' + colors.backgroundColor;
-                        style += '; border-color:' + colors.borderColor;
-                        style += '; border-width: 2px';
-                        var span = '<span style="' + style + '"></span>';
-                        innerHtml += '<tr><td>' + span + body + '</td></tr>';
-                    });
-                    innerHtml += '</tbody>';
-
-                    var tableRoot = tooltipEl.querySelector('table');
-                    tableRoot.innerHTML = innerHtml;
-                }
-*/
                 // `this` will be the overall tooltip
                 var position = this._chart.canvas.getBoundingClientRect();
 
@@ -312,6 +262,4 @@ export class CapacityOffloadComponent {
 	console.log(config.data);
     this.bandiwthChart = new Chart(this.canvasElement, config);
   }
-
-
 }

@@ -1,6 +1,6 @@
 %base-font {
-    font: 12px Montserrat, sans-serif;
-    color: black;
+    font: 10px Montserrat, sans-serif;
+    color: rgba(0,0,0,0.4);
 }
 
 $light-blue: #6AB8DE;
@@ -25,12 +25,14 @@ li {
         transform: translate(-50%, 0);
         min-width: 200px;
         opacity: 0;
+        box-shadow: 1px 1px 2px 1px rgba(0,0,0,0.3);
 }
 
 #chartjs-tooltip {
     .title {
         @extend %base-font;
         font-weight: bold;
+        color: black;
     }
 
     .body-text {
