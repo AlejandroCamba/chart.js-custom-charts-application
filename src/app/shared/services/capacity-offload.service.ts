@@ -36,7 +36,6 @@ export class CapacityOffloadService {
       "to": this.dateCache.getTo(),
       "aggregate": "max" }).map(response => {
         console.log("POST /bandwith max values successful");
-        console.log("max values: cdn:" + response["cdn"] + " p2p:" + response["p2p"])
         return response })
   }  
 }

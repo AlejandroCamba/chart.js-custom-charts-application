@@ -206,8 +206,6 @@ export class CapacityOffloadComponent {
                 // Tooltip Element
                 var tooltipEl = document.getElementById('chartjs-tooltip');
 
-                console.log(tooltipModel);
-
                 // Hide if no tooltip
                 if (tooltipModel.opacity === 0) {
                     tooltipEl.style.opacity = "0";
@@ -261,7 +259,6 @@ export class CapacityOffloadComponent {
 			}		
 		}
 
-		console.log(config.data);
     	this.bandiwthChart = new Chart(this.canvasElement, config);
   	}
 }
