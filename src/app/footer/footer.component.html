@@ -5,34 +5,36 @@
 			  <div class="input-group-prepend">
 			    <span class="input-group-text" id="inputGroup-sizing-sm">From</span>
 			  </div>
-			  	  <select class="custom-select" id="inputGroupSelect01" (change)="setInitialDate($event.target.value)">
+			  	  <select class="custom-select" 
+			  	  		  id="inputGroupSelect01" 
+			  	  		  (change)="setInitialDate($event.target.value)">
 				    <option selected>Choose...</option>
-				    <option *ngFor="let recipient of pairFormattedDates | keyvalue" [value]="recipient.key">{{recipient.value}}</option>
+				    <option *ngFor="let recipient of pairFormattedDates | keyvalue" 
+				    		[value]="recipient.key">{{recipient.value}}
+				    </option>
 				  </select>
 			</div>
 		</div>
 		<div class="col-8">
 			<div class="graph-wrapper">
 				<background-graph *ngIf="backgroundData && backgroundLabels"
-					[(backgroundData)]="backgroundData"
-					[(backgroundLabels)]="backgroundLabels"
-				></background-graph>
+								  [(backgroundData)]="backgroundData"
+								  [(backgroundLabels)]="backgroundLabels">
+				</background-graph>
 			</div>		
 		</div>
 		<div class="col-2">
 			<div class="input-group input-group-sm mb-3">
 			  <div class="input-group-prepend">
-			  	  <select 
-			  	  class="custom-select" 
-			  	  id="inputGroupSelect02" 
-			  	  (change)="setFinalDate($event.target.value)">
-				    <option selected>Choose...</option>
-				    <option 
-				    	*ngFor="let recipient of pairFormattedDates | keyvalue"
-				    	[value]="recipient.key">{{recipient.value}}
-					</option>
-				  </select>
-			    <span class="input-group-text" id="inputGroup-sizing-sm">To</span>
+			  	  	<select class="custom-select" 
+				  	  		id="inputGroupSelect02" 
+				  	  		(change)="setFinalDate($event.target.value)">
+						    <option selected>Choose...</option>
+						    <option *ngFor="let recipient of pairFormattedDates | keyvalue"
+						    		[value]="recipient.key">{{recipient.value}}
+							</option>
+				  	</select>
+			    	<span class="input-group-text" id="inputGroup-sizing-sm">To</span>
 			  </div>
 			</div>	
 		</div>
