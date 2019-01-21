@@ -35,7 +35,9 @@ export class CapacityOffloadComponent {
 
   	constructor(
   		private bytesUtils: ByteConversionService,
-  		private timestampUtils: TimestampConversionService){}
+  		private timestampUtils: TimestampConversionService){
+  		this.extendLine();
+  	}
 
   	private setCanvasDimensions() {
     	this.canvasElement = <HTMLCanvasElement> document.getElementById('bandwith-id');
@@ -51,14 +53,46 @@ export class CapacityOffloadComponent {
     	this.initializeGraph();
 	}
 
+
+	private extendLine() {
+		Chart.defaults.LineWithLine = Chart.defaults.line;
+		Chart.controllers.LineWithLine = Chart.controllers.line.extend({
+		   draw: function(ease) {
+		      Chart.controllers.line.prototype.draw.call(this, ease);
+
+		      if (this.chart.tooltip._active && this.chart.tooltip._active.length) {
+		         var activePoint = this.chart.tooltip._active[0],
+		             ctx = this.chart.ctx,
+		             x = activePoint.tooltipPosition().x,
+		             topY = this.chart.scales['y-axis-0'].top,
+		             bottomY = this.chart.scales['y-axis-0'].bottom;
+
+		         // draw line
+		         ctx.save();
+		         ctx.beginPath();
+		         ctx.moveTo(x, topY);
+		         ctx.lineTo(x, bottomY + 10);
+		         ctx.lineWidth = 1;
+		         ctx.strokeStyle = 'rgba(0,0,0,0.1)';
+		         ctx.stroke();
+		         ctx.restore();
+		      }
+		   }
+		});
+	}
+
 	private initializeGraph() {
+
 	if (this.bandiwthChart) {
 		this.bandiwthChart.destroy();
 	}
-	console.log("capacity offload initializing...")
+
 	let config = JSON.parse(JSON.stringify(DEFAULT_CONFIG));
 
 	config.options.layout.padding.top = 15;
+	config.type = "LineWithLine";
+	config.rawLabels = JSON.parse(JSON.stringify(this.cdnLabels));
+	config.functions[0] = this.timestampUtils.toFullDateAndTime;//create enum later for function indexes
 
 	config.data = {
 		labels: this.cdnLabels.map(value => {
@@ -71,7 +105,15 @@ export class CapacityOffloadComponent {
 			fill: true,
 			backgroundColor: COLORS.PINK,
 			borderColor: COLORS.DARK_PINK,
-			pointRadius: 0
+			pointBorderwidth: 1,
+			pointBorderColor: "white",
+			pointRadius: 0,
+			pointHoverRadius: 3,
+			pointHoverBackgroundColor: COLORS.PINK,
+			pointHoverBorderWidth: 1,
+			pointHoverBorderColor: 'white',
+			pointStyle: "rect",
+			pointRotation: 45
 		},{
 			label: '',
 			fill: true,
@@ -80,12 +122,21 @@ export class CapacityOffloadComponent {
 			pointRadius: 0,
 			lineTension: 0,
 			data: this.bytesUtils.toGb(this.p2pData),
+	        pointHitRadius: 4,
+			pointBorderwidth: 1,
+			pointBorderColor: "white",
+			pointHoverRadius: 3,
+			pointHoverBackgroundColor: COLORS.DARK_BLUE,
+			pointHoverBorderWidth: 1,
+			pointHoverBorderColor: 'white',
+			pointStyle: "circle",
+			pointRotation: 45
 		}]
 	};
 
 	config.options.annotation = {
 		annotations: [{
-				      drawTime: "afterDraw",
+				      drawTime: "afterDatasetsDraw",
 				      id: "hline",
 				      type: "line",
 				      mode: "horizontal",
@@ -110,7 +161,7 @@ export class CapacityOffloadComponent {
 				        xAdjust: 0,
 				      }
 				    },{
-				      drawTime: "afterDraw",
+				      drawTime: "afterDatasetsDraw",
 				      id: "dline",
 				      type: "line",
 				      mode: "horizontal",
@@ -143,8 +194,115 @@ export class CapacityOffloadComponent {
 		maxTicksLimit: 15,
 		maxRotation: 0,
 		minRotation: 0
-	}
+	};
 
+	config.options.hover = {
+		mode: "index",
+		intersect: false
+	};
+
+	config.options.tooltips = {
+		enabled: false,
+		/*mode: "index",
+		intersect: true,
+		backgroundColor: "white",
+		titleFontColor: "black",
+		titleFontFamily: "Arial",
+		borderWidth: 1,
+		borderColor: "rgba(0,0,0,0.2)",
+		cornerRadius: 3,
+		callbacks: {
+			title: function(tooltipItem, chart){
+				console.log("time value for index" + config.rawLabels[tooltipItem[0].index]);
+				return config.functions[0](config.rawLabels[tooltipItem[0].index]);
+			},
+		    label: function (t, d) {
+                    if (t.datasetIndex === 0) {
+                        return 'HTTP: ' + t.yLabel.toFixed(2) + "Gbps";
+                    } else if (t.datasetIndex === 1) {
+                        return 'P2P ' + t.yLabel.toFixed(2) + "Gbps";
+                    }
+			},
+			labelTextColor: function(tooltipItem, chart){
+				if (tooltipItem.datasetIndex === 0) {
+					return 'blue'
+				} else {
+					return 'black'
+				}
+			},
+			footer: function(tooltipItem, chart){
+				return "footer"
+			}
+		},*/
+		custom: function(tooltipModel) {
+                // Tooltip Element
+                var tooltipEl = document.getElementById('chartjs-tooltip');
+
+                console.log(tooltipModel);
+
+                // Hide if no tooltip
+                if (tooltipModel.opacity === 0) {
+                    tooltipEl.style.opacity = "0";
+                    return;
+                }
+
+                console.log("tooltip model:");
+                console.log(tooltipModel);
+                tooltipModel.caretX = tooltipModel.caretX + 70;
+                // Set caret Position
+                tooltipModel.xAlign = "right";
+                tooltipEl.classList.remove('center', 'above', 'no-transform');
+                if (tooltipModel.xAlign) {
+                    tooltipEl.classList.add(tooltipModel.xAlign);
+                } else {
+                    tooltipEl.classList.add('no-transform');
+                }
+
+                function getBody(bodyItem) {
+                    return bodyItem.lines;
+                }
+/*
+                // Set Text
+                if (tooltipModel.body) {
+                    var titleLines = tooltipModel.title || [];
+                    var bodyLines = tooltipModel.body.map(getBody);
+
+                    var innerHtml = '<thead>';
+
+                    titleLines.forEach(function(title) {
+                        innerHtml += '<tr><th>' + title + '</th></tr>';
+                    });
+                    innerHtml += '</thead><tbody>';
+
+                    bodyLines.forEach(function(body, i) {
+                        var colors = tooltipModel.labelColors[i];
+                        var style = 'background:' + colors.backgroundColor;
+                        style += '; border-color:' + colors.borderColor;
+                        style += '; border-width: 2px';
+                        var span = '<span style="' + style + '"></span>';
+                        innerHtml += '<tr><td>' + span + body + '</td></tr>';
+                    });
+                    innerHtml += '</tbody>';
+
+                    var tableRoot = tooltipEl.querySelector('table');
+                    tableRoot.innerHTML = innerHtml;
+                }
+*/
+                // `this` will be the overall tooltip
+                var position = this._chart.canvas.getBoundingClientRect();
+
+                // Display, position, and set styles for font
+                tooltipEl.style.opacity = "1";
+                tooltipEl.style.position = 'absolute';
+                tooltipEl.style.left = position.left + window.pageXOffset + tooltipModel.caretX + 'px';
+                tooltipEl.style.top = position.top + window.pageYOffset + tooltipModel.caretY + 'px';
+                tooltipEl.style.fontFamily = tooltipModel._bodyFontFamily;
+                tooltipEl.style.fontSize = tooltipModel.bodyFontSize + 'px';
+                tooltipEl.style.fontStyle = tooltipModel._bodyFontStyle;
+                tooltipEl.style.padding = tooltipModel.yPadding + 'px ' + tooltipModel.xPadding + 'px';
+                tooltipEl.style.pointerEvents = 'none';
+            }
+	}
 	config.options.scales.yAxes[0].ticks = {
 		maxTicksLimit: 3,
 		callback: function(value, index) {
@@ -154,4 +312,6 @@ export class CapacityOffloadComponent {
 	console.log(config.data);
     this.bandiwthChart = new Chart(this.canvasElement, config);
   }
+
+
 }
