@@ -1,4 +1,25 @@
 <h1>CAPACITY OFFLOAD</h1>
 <div class="wrapper">
-	<canvas class="chart" id="bandwith-id"></canvas>	
+	<canvas class="chart" id="bandwith-id"></canvas>
+	<div id="chartjs-tooltip" class="center bottom">
+	    <h1 class="title" id="title">Monday, November 13, 2017 12:00 AM</h1>
+	    <div>
+	    	<li class="blue">
+	    		<span class="body-text">P2P: </span>
+	    		<span class="body-text blue" id="p2p-value">16.41</span><span class="body-text blue">Gbps</span>
+	    	</li>
+	    	<li class="pink">
+	    		<span class="body-text">HTTP: </span>
+	    		<span class="body-text pink" id="http-value"></span><span class="body-text pink">Gbps</span>
+	    	</li>
+	      	<!-- HTTP value -->
+	       	<div class="separator"></div>
+	       	<span class="body-text">Total: 
+	       		<span id="spn-leads" class="body-text green" id="total-value"></span><span class="body-text green">Gbps</span>
+	       	</span><br/><!-- total value -->
+	        <span class="body-text">Spike reduction: 
+	        	<span id="spn-meetings" class="body-text blue" id="spike-red">NaN</span>
+	        </span><br/><!--spike-->
+	    </div>
+	</div>
 </div>

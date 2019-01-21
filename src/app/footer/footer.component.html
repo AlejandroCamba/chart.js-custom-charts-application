@@ -13,7 +13,10 @@
 		</div>
 		<div class="col-8">
 			<div class="graph-wrapper">
-				<background-graph></background-graph>
+				<background-graph *ngIf="backgroundData && backgroundLabels"
+					[(backgroundData)]="backgroundData"
+					[(backgroundLabels)]="backgroundLabels"
+				></background-graph>
 			</div>		
 		</div>
 		<div class="col-2">
