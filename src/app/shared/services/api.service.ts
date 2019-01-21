@@ -27,6 +27,9 @@ export class ApiService {
   }
 
   private formatErrors(error: any) {
+    if (error.status == 403) {
+      localStorage.clear();
+    }
     return  throwError(error.error);
   }
 }

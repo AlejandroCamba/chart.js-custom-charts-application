@@ -52,7 +52,8 @@ export class ConcurrentViewersComponent {
 				data: this.viewersData,
 				fill: false,
 				borderColor: '#E65F00',
-				pointRadius: 0
+				pointRadius: 0,
+				pointHoverRadius: 0
 			}]
 		};
 
@@ -62,7 +63,6 @@ export class ConcurrentViewersComponent {
 			    if (value !== 0) return value;
 			}
 		 };
-
   		this.viewersChart = new Chart(this.canvasElement, config);
   	}
 }
