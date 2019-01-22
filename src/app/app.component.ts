@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { AuthService } from './shared/services/auth/auth.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +8,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'frontend-application-test';
+  	constructor(private authService: AuthService){}
+
+  	isUserLoggedIn(): boolean {
+  		return this.authService.getToken() == null ? false : true;
+ 	}
 }

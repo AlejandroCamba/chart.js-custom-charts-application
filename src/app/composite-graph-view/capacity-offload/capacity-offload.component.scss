@@ -1,0 +1,67 @@
+%base-font {
+    font: 10px Montserrat, sans-serif;
+    color: rgba(0,0,0,0.4);
+}
+
+$light-blue: #6AB8DE;
+$light-pink: #C54C84;
+$green: #458741;
+
+li {
+    color: red;
+}
+
+#chartjs-tooltip {
+        opacity: 1;
+        position: absolute;
+        background: white;
+        color: black;
+        border: 1px solid rgba(0,0,0,0.05);
+        border-radius: 5px;
+        -webkit-transition: all .1s ease;
+        transition: all .1s ease;
+        pointer-events: none;
+        -webkit-transform: translate(-50%, 0);
+        transform: translate(-50%, 0);
+        min-width: 200px;
+        opacity: 0;
+        box-shadow: 1px 1px 2px 1px rgba(0,0,0,0.3);
+}
+
+#chartjs-tooltip {
+    .title {
+        @extend %base-font;
+        font-weight: bold;
+        color: black;
+    }
+
+    .body-text {
+        @extend %base-font;
+    }
+
+    .blue {
+        color: $light-blue;
+    }
+
+    .pink {
+        color: $light-pink;
+    }
+
+    .green {
+        color: $green;
+    }
+}
+
+.chartjs-tooltip-key {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  margin-right: 10px;
+}
+
+.separator {
+    width: 100%;
+    border: 0.5px solid rgba(0,0,0,0.05);
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
